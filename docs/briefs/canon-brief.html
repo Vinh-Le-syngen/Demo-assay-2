@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Canon — making marketing claims provably true</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color: #1c2024; line-height: 1.5; font-size: 10.5pt; margin: 0;
+  }
+  h1 { font-size: 19pt; margin: 0 0 2px; letter-spacing: -0.4px; }
+  h1 + .sub { font-size: 11pt; color: #6b7280; margin: 0 0 14px; font-weight: 500; }
+  h2 { font-size: 12.5pt; margin: 18px 0 6px; padding-bottom: 3px;
+       border-bottom: 1.5px solid #e3e6ea; color: #111418; }
+  p { margin: 7px 0; }
+  ul { margin: 6px 0; padding-left: 18px; }
+  li { margin: 3px 0; }
+  strong { color: #0b0d0f; }
+  em { color: #374151; }
+  .note {
+    background: #f6f8f5; border-left: 3px solid #6f8f6a; border-radius: 4px;
+    padding: 9px 12px; margin: 10px 0 16px; font-size: 9.7pt; color: #36433a;
+  }
+  .summary { background: #fafbfc; border: 1px solid #e7eaee; border-radius: 6px; padding: 4px 14px 10px; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.2pt; }
+  th, td { border: 1px solid #dfe3e8; padding: 6px 8px; vertical-align: top; text-align: left; }
+  th { background: #f0f2f5; font-weight: 600; }
+  td:nth-child(1) { width: 30%; }
+  td:nth-child(2) { width: 18%; font-weight: 600; }
+  .v-block { color: #9a3b2f; }   .v-warn { color: #9a7b1f; }   .v-ok { color: #2f6b3a; }
+  .kicker { color: #6b7280; font-size: 9.5pt; }
+  ol { margin: 6px 0; padding-left: 20px; }
+  footer { margin-top: 16px; padding-top: 8px; border-top: 1px solid #e3e6ea;
+           color: #8a929b; font-size: 8.5pt; }
+  h2 { break-after: avoid; } table, tr { break-inside: avoid; }
+</style>
+</head>
+<body>
+
+<h1>Canon — making marketing claims provably true</h1>
+<p class="sub">A short brief · for review</p>
+
+<div class="note">
+A working system, not a concept: this is running today inside one of our own ventures (a regulated services
+platform) and is being extracted as a reusable tool any company can adopt. The example below uses real,
+public marketing copy to show how it would work for an adventure-travel brand.
+</div>
+
+<div class="summary">
+<h2 style="border:0;margin-top:8px;">Executive summary</h2>
+<p>Every growing company hits the same fight: the marketing person writes copy that sounds great, the founder
+isn't sure it's all true, and nobody can say <em>exactly</em> which claims are safe. So you either ship
+overpromises (refund disputes, "we handle visas" you don't, an expired certification badge still on the
+homepage) or you slow everything down arguing line by line.</p>
+<p><strong>Canon turns that argument into a fact-check a computer runs automatically.</strong> You write down
+three short lists once: what you've <em>actually</em> built and can deliver, what you're <em>allowed</em> to
+say, and what you must <em>never</em> say. Every claim you publish must trace to something real on those
+lists — or it simply doesn't go live. The website build fails and tells you which claim isn't backed, and
+why.</p>
+<p>The effect: marketing keeps its speed and creativity, the founder stops being the human compliance filter,
+and the company can't quietly drift into claims it can't honor — even as the team grows and nobody remembers
+why a line was risky. It's the discipline of "don't say what isn't true" made mechanical, so it survives
+scale.</p>
+</div>
+
+<h2>The problem (the "marketing guy" problem)</h2>
+<p>It's not that the marketer is careless. It's that <strong>nobody owns a single source of truth about
+what's actually true.</strong> So claims get made from optimism, get copied across pages, and rot quietly:</p>
+<ul>
+  <li>A <em>guarantee</em> gets written that operations won't actually honor → refund disputes, chargebacks, bad reviews.</li>
+  <li>A <em>capability</em> gets claimed ("we handle your visa") that's really "we refer you to a partner" → angry customers, possibly a regulatory issue.</li>
+  <li>A <em>statistic</em> ("99.6% rate us 5 stars") goes up with no source on file → indefensible if challenged.</li>
+  <li>A <em>certification badge</em> stays on the site after it lapses → a real liability nobody noticed.</li>
+</ul>
+<p>Each is small. Together they're the difference between a brand people trust and one that gets caught out.</p>
+
+<h2>What it is (in plain terms)</h2>
+<p>Three short files you keep up to date — no code to read:</p>
+<ol>
+  <li><strong>What's real</strong> — the honest list of what you've built and can actually deliver today (and what's only "coming soon").</li>
+  <li><strong>What you're allowed to say</strong> — your approved claims. Each one is <em>linked</em> to an item on list 1. If the real thing isn't there, the claim isn't allowed.</li>
+  <li><strong>What you must never say</strong> — banned phrases (e.g. "guaranteed," "risk-free," unverifiable superlatives) with the safe wording to use instead.</li>
+</ol>
+<p>Plus, for a travel business, a fourth: <strong>what you may sell, where</strong> — because things like
+visas and insurance are regulated, and "we arrange it" vs "we handle it" is a legal line, not a style choice.</p>
+<p><strong>The one rule the machine enforces:</strong> <em>a claim goes public only if (a) it maps to
+something real you can deliver, and (b) it isn't a banned phrase.</em> Break either and the publish is
+blocked, with the exact reason.</p>
+
+<h2>Worked example — an adventure-travel brand (using live homepage copy)</h2>
+<p class="kicker">The "blocked" verdicts are illustrative — each clears the moment the real capability or
+evidence is on file. That's the whole point.</p>
+<table>
+  <thead><tr><th>Claim on the site</th><th>Verdict</th><th>Why</th></tr></thead>
+  <tbody>
+    <tr><td><strong>"100% Best Price Guaranteed"</strong></td><td class="v-block">Blocked</td>
+      <td>"Guaranteed" + a price promise must map to a real, written price-match process ops will honor. No documented process on file = no claim. Fix: confirm the process, or reword to "We'll match a lower price — ask us."</td></tr>
+    <tr><td><strong>"100% refund guaranteed, first 24h, no questions asked"</strong></td><td class="v-block">Blocked until confirmed</td>
+      <td>A hard refund promise must trace to a refund policy finance actually executes. If "no questions asked" isn't literally how it works, this is a dispute waiting to happen. Confirm the policy → claim clears.</td></tr>
+    <tr><td><strong>"We handle everything — flights, visas, transfers, insurance"</strong></td><td class="v-block">Blocked (regulated)</td>
+      <td>"Handle visas / insurance" claims authority you may not hold. If it's really "we help arrange via a partner," the gate forces the honest wording. This is the one that becomes a legal problem at scale.</td></tr>
+    <tr><td><strong>"99.6% of our customers rate us 5 stars"</strong></td><td class="v-warn">Needs a source</td>
+      <td>A specific number must have evidence attached (where it's from, when measured). Unsourced = flagged. Add the source → it ships, and now it's defensible.</td></tr>
+    <tr><td><strong>"ISO 14001 &amp; ISO 9001 certified"</strong></td><td class="v-warn">Auto-expires</td>
+      <td>Certifications carry an expiry date. The gate warns and then blocks when the date passes, so an expired badge can never sit silently on the homepage.</td></tr>
+    <tr><td><strong>"24/7 assistance + AI support"</strong></td><td class="v-block">Blocked if not live</td>
+      <td>If AI support is actually just WhatsApp today, "AI support" is marked <em>coming soon</em> and can't be claimed as shipped — until it is.</td></tr>
+    <tr><td><strong>"Top-rated adventures travelers love" / "travel with the best"</strong></td><td class="v-ok">Allowed</td>
+      <td>Brand voice, not a measurable promise. The gate distinguishes flavor from factual claims and lets the flavor through.</td></tr>
+  </tbody>
+</table>
+<p>The valuable part isn't the red marks — it's that <strong>the decision is no longer an opinion.</strong>
+The founder and the marketer stop arguing about whether a line is OK. They look at one file. If the
+capability is real, the claim ships. If not, the fix is obvious: make it real, add the evidence, or reword.
+The fight becomes a checklist.</p>
+
+<h2>How it runs, day to day</h2>
+<ol>
+  <li>Marketing writes whatever they want — full creative freedom.</li>
+  <li>Before it goes live, an automatic check confirms every claim traces to something real and avoids banned phrases.</li>
+  <li>Anything unbacked fails the publish with a plain-English reason. Make it real, add a source, or reword — then it ships.</li>
+</ol>
+<p>No new tool to log into; it runs in the background of the normal publish process. The three lists take an
+afternoon to write the first time and minutes to maintain.</p>
+
+<h2>What I'd love your feedback on</h2>
+<ul>
+  <li>Does the <strong>"argument becomes a checklist"</strong> framing match your real pain — or is your problem more about the <em>quality / consistency</em> of the copy than its <em>truthfulness</em>?</li>
+  <li>Would the <strong>expiring-certification</strong> and <strong>unsourced-statistic</strong> catches alone be worth it to you?</li>
+  <li>Are you (the founder) willing to maintain the "what's actually true" list — or does that itself need to be someone's job?</li>
+  <li>Would you want this as something <strong>you run</strong>, or as a <strong>done-for-you service</strong> — we set up the three lists with you, then it self-checks from then on?</li>
+</ul>
+
+<footer>Canon · governed-claims brief · prepared for review · draft for feedback</footer>
+
+</body>
+</html>

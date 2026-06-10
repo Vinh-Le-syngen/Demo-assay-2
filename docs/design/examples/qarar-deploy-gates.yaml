@@ -1,0 +1,119 @@
+# Pre-deploy gate bundles for Qarar (design example — schema: deployGates, not yet engine-enforced).
+#
+# A bundle is an ordered set of gates that must pass before a deploy proceeds. Two stages:
+#   staging    — blocks `deploy to staging`
+#   production — blocks `promote staging -> production` (launch)
+#
+# kind:
+#   governance — run by the pure @eng/governance engine (no IO; deterministic verdict).
+#   functional — performed by an EXTERNAL check (a CI script or an agent) that does real work
+#                (render a browser, crawl links, translate) and reports a verdict back in the
+#                GovernanceDecision shape. The engine never performs side-effects.
+#
+# blocks: deploy | launch | none(warn)      severity: critical | high | medium
+version: 1
+
+supported_locales: [en, ar, vi]
+public_surfaces:
+  - apps/web/src/app
+  - .agent-work/landing
+registries_dir: docs/compliance/registries
+
+bundles:
+
+  # ───────── must all pass BEFORE deploying to staging ─────────
+  staging:
+    description: "Truth + completeness + function checks before staging."
+    policy: collect_all            # run every gate and report all failures (not fail-fast)
+    gates:
+
+      # ---- governance (engine, pure) ----
+      # Gate families (see deploy-gates.md "Atlas vs Canon boundary"):
+      #   atlas-parity      → @sys/atlas   (edges: change not propagated)
+      #   canon-validate    → @sys/canon   (shape/schema)            = `schema` below
+      #   canon-completeness→ @eng/governance (business-state validity) = `page-authority`, future catalog/service checks
+      #   canon-claims      → @eng/governance (claims)               = `claim-scan`, `claim-capability`
+      - id: atlas-parity
+        kind: governance
+        owner: atlas               # edges → Atlas: registered couplings must have propagated
+        runner: script             # atlas is vendored and self-evaluates in CI; bundle consumes its verdict
+        blocks: deploy
+        severity: high
+      - id: schema                 # canon-validate
+        kind: governance
+        engine: validate           # every registry parses against its @sys/canon schema
+        blocks: deploy
+        severity: critical
+      - id: claim-scan
+        kind: governance
+        engine: scan               # no restricted phrases on public surfaces
+        inputs: { registry: restricted-claims.yaml, paths: public_surfaces }
+        blocks: deploy
+        severity: critical
+      - id: claim-capability
+        kind: governance
+        engine: link               # every approved claim → a live/assisted capability
+        inputs: { claims: approved-claims.yaml, capabilities: capability-inventory.yaml }
+        blocks: deploy
+        severity: high
+      - id: page-authority
+        kind: governance
+        engine: seo-page-authority # every public page maps to an approved surface
+        blocks: deploy
+        severity: high
+      - id: freshness
+        kind: governance
+        engine: freshness          # provenance expiry — at staging this only warns
+        blocks: none
+        severity: medium
+
+      # ---- functional (external check / agent reports a verdict) ----
+      - id: build
+        kind: functional
+        runner: script
+        check: "next build passes; no type errors."
+        blocks: deploy
+        severity: critical
+      - id: i18n-coverage
+        kind: functional
+        runner: agent
+        check: "Every page in the route tree has a translation for every supported_locale; none stale."
+        then: claim-scan           # re-run restricted/approved scan on EACH translated locale
+        blocks: deploy
+        severity: high
+      - id: mobile-render
+        kind: functional
+        runner: agent
+        check: "Render each public route at 390x844 and 360x740: no horizontal overflow, tap targets ≥44px, no clipped CTAs."
+        blocks: deploy
+        severity: high
+      - id: link-integrity
+        kind: functional
+        runner: script
+        check: "Crawl all internal + external links on public surfaces; fail on any 4xx/5xx or dead anchor."
+        blocks: deploy
+        severity: high
+
+  # ───────── additional gates BEFORE promoting to production (launch) ─────────
+  production:
+    description: "Launch-only gates. Everything in `staging` must still hold."
+    inherits: staging
+    policy: collect_all
+    gates:
+      - id: service-authority
+        kind: governance
+        engine: service-authority
+        inputs: { file: service-authority.yaml }
+        check: "Every visible/sellable service is commercially sellable AND delivery_readiness all `ready`; no VERIFY cells."
+        blocks: launch
+        severity: high
+      - id: jurisdiction
+        kind: governance
+        engine: jurisdiction       # no service offered in a country it isn't authorised for
+        blocks: launch
+        severity: high
+      - id: freshness
+        kind: governance
+        engine: freshness          # at launch, stale provenance DOES block
+        blocks: launch
+        severity: high

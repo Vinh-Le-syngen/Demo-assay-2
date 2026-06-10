@@ -1,0 +1,60 @@
+{
+  "name": "@sys/assay",
+  "version": "0.3.0",
+  "description": "Test registry + canonical taxonomy + quality gates. Generic engine + per-project config; usable as a library or the `sys-assay` CLI.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "sys-assay": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "schema",
+    "CHANGELOG.md",
+    "MIGRATION.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./engine": {
+      "types": "./dist/engine.d.ts",
+      "import": "./dist/engine.js",
+      "require": "./dist/engine.cjs"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.js",
+      "require": "./dist/config.cjs"
+    },
+    "./taxonomy": {
+      "types": "./dist/taxonomy.d.ts",
+      "import": "./dist/taxonomy.js",
+      "require": "./dist/taxonomy.cjs"
+    },
+    "./taxonomy.json": "./dist/taxonomy.json",
+    "./taxonomy.yaml": "./dist/taxonomy.yaml",
+    "./taxonomy.schema.json": "./dist/taxonomy.schema.json",
+    "./schema": "./schema/assay.config.schema.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18",
+    "yaml": "^2.6.1"
+  }
+}

@@ -1,0 +1,2869 @@
+{
+  "schema_version": 1,
+  "_note": "SYS-ASSAY test registry for ~/projects/sys — classified into the canonical 12-category taxonomy.",
+  "tests": [
+    {
+      "path": "packages/errors/src/__tests__/core.test.ts",
+      "area": "errors",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/reporting/src/__tests__/core.test.ts",
+      "area": "reporting",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/secrets/src/__tests__/core.test.ts",
+      "area": "secrets",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/telemetry/src/__tests__/core.test.ts",
+      "area": "telemetry",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/warden/src/__tests__/claim.test.ts",
+      "area": "warden",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/warden/src/__tests__/core.test.ts",
+      "area": "warden",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": ["pre-merge"],
+      "subtypes": {"kind": "pure"},
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/config.test.ts",
+      "area": "assay",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/engine.test.ts",
+      "area": "assay",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/taxonomy.test.ts",
+      "area": "assay",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/core.test.ts",
+      "area": "atlas",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/authorize.test.ts",
+      "area": "auth",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/config.test.ts",
+      "area": "auth",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/methods.test.ts",
+      "area": "auth",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/middleware.test.ts",
+      "area": "auth",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/session-machine.test.ts",
+      "area": "auth",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/sign-in.test.ts",
+      "area": "auth",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/verify.test.ts",
+      "area": "auth",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/core.test.ts",
+      "area": "backup",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/orchestration.test.ts",
+      "area": "backup",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/billing.test.ts",
+      "area": "billing",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/countries.test.ts",
+      "area": "billing",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/factory.test.ts",
+      "area": "billing",
+      "category": "unit",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/invoice-html.test.ts",
+      "area": "billing",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/money.test.ts",
+      "area": "billing",
+      "category": "unit",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/canon.test.ts",
+      "area": "canon",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/core.test.ts",
+      "area": "checkpoint",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/gates.test.ts",
+      "area": "checkpoint",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/engine.test.ts",
+      "area": "consent",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/consent/src/__tests__/service.test.ts",
+      "area": "consent",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.test.ts",
+      "area": "dialog",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/core.test.ts",
+      "area": "gatekeeper",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/governance/src/__tests__/governance.test.ts",
+      "area": "governance",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/core.test.ts",
+      "area": "groundskeeper",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/detectors.test.ts",
+      "area": "groundskeeper",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/core.test.ts",
+      "area": "herald",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/model-router.test.ts",
+      "area": "model-router",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/bridge.test.ts",
+      "area": "pay",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/config.test.ts",
+      "area": "pay",
+      "category": "unit",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/machine.test.ts",
+      "area": "pay",
+      "category": "unit",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/rag.test.ts",
+      "area": "rag",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/core.test.ts",
+      "area": "sentinel",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/probes.test.ts",
+      "area": "sentinel",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/access.test.ts",
+      "area": "vault",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/reuse.test.ts",
+      "area": "vault",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/service.test.ts",
+      "area": "vault",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/checks.test.ts",
+      "area": "warp",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/core.test.ts",
+      "area": "warp",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/workflow.test.ts",
+      "area": "workflow",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/release-set.test.ts",
+      "area": "release",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/adoption.test.ts",
+      "area": "release",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/workspace.test.ts",
+      "area": "release",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/decide.test.ts",
+      "area": "release",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/adversarial-token.test.ts",
+      "area": "auth",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/adversarial-authorize.test.ts",
+      "area": "auth",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/governance-authz-policy.test.ts",
+      "area": "auth",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/governance-deny-precedence.test.ts",
+      "area": "auth",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/regression-returnurl.test.ts",
+      "area": "auth",
+      "category": "regression",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "behavioral"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/regression-session-expiry.test.ts",
+      "area": "auth",
+      "category": "regression",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "behavioral"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/machine-negative.test.ts",
+      "area": "pay",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/bridge-negative.test.ts",
+      "area": "pay",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/webhook-adversarial.test.ts",
+      "area": "pay",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/idempotency-adversarial.test.ts",
+      "area": "pay",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/fulfilment-policy-governance.test.ts",
+      "area": "pay",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/gate-wiring-governance.test.ts",
+      "area": "pay",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/lifecycle-integration.test.ts",
+      "area": "pay",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/reuse-boundary.test.ts",
+      "area": "vault",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "boundary"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/negative.test.ts",
+      "area": "vault",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/adversarial.test.ts",
+      "area": "vault",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/access-policy-matrix.test.ts",
+      "area": "vault",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/lifecycle.test.ts",
+      "area": "vault",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/negative-validation.test.ts",
+      "area": "billing",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/negative-money.test.ts",
+      "area": "billing",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/adversarial-injection.test.ts",
+      "area": "billing",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/adversarial-protocol.test.ts",
+      "area": "billing",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/governance-tax-policy.test.ts",
+      "area": "billing",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/governance-numbering-linkage.test.ts",
+      "area": "billing",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/regression-rounding.test.ts",
+      "area": "billing",
+      "category": "regression",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "behavioral"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/regression-totals.test.ts",
+      "area": "billing",
+      "category": "regression",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "behavioral"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/unit-concepts.test.ts",
+      "area": "atlas",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/negative.test.ts",
+      "area": "atlas",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/adversarial.test.ts",
+      "area": "atlas",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/governance.test.ts",
+      "area": "atlas",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/freshness-boundary.test.ts",
+      "area": "backup",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "boundary"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/incremental-idempotency.test.ts",
+      "area": "backup",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/negative.test.ts",
+      "area": "backup",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/adversarial.test.ts",
+      "area": "backup",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/unit.test.ts",
+      "area": "canon",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "boundary"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/integration.test.ts",
+      "area": "canon",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/negative.test.ts",
+      "area": "canon",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/adversarial-exclude.test.ts",
+      "area": "canon",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/adversarial-injection.test.ts",
+      "area": "canon",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "prompt-injection"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/governance-gate-policy.test.ts",
+      "area": "canon",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/governance-claim-backing.test.ts",
+      "area": "canon",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "risk-mapping"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/unit-protected-path.test.ts",
+      "area": "checkpoint",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/integration-deploy-guard.test.ts",
+      "area": "checkpoint",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/integration-partial-state.test.ts",
+      "area": "checkpoint",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/negative-missing-state.test.ts",
+      "area": "checkpoint",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/negative-malformed-state.test.ts",
+      "area": "checkpoint",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/adversarial-author-spoof.test.ts",
+      "area": "checkpoint",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/adversarial-gate-bypass.test.ts",
+      "area": "checkpoint",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/checkpoint/src/__tests__/governance-policy-wiring.test.ts",
+      "area": "checkpoint",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/unit-decision.test.ts",
+      "area": "consent",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/integration-lifecycle.test.ts",
+      "area": "consent",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/negative-input.test.ts",
+      "area": "consent",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/adversarial-protocol.test.ts",
+      "area": "consent",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/governance-policy.test.ts",
+      "area": "consent",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.unit.test.ts",
+      "area": "dialog",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.integration.test.ts",
+      "area": "dialog",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "external"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.negative.test.ts",
+      "area": "dialog",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.adversarial.test.ts",
+      "area": "dialog",
+      "category": "adversarial",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/unit-helpers.test.ts",
+      "area": "gatekeeper",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/unit-boundary.test.ts",
+      "area": "gatekeeper",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "boundary"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/negative-input-validation.test.ts",
+      "area": "gatekeeper",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/negative-unsupported.test.ts",
+      "area": "gatekeeper",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "unsupported"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/adversarial-force-allow.test.ts",
+      "area": "gatekeeper",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/adversarial-spoofed-edge.test.ts",
+      "area": "gatekeeper",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/gatekeeper/src/__tests__/governance-policy.test.ts",
+      "area": "gatekeeper",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/decide-unit.test.ts",
+      "area": "governance",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/define-integration.test.ts",
+      "area": "governance",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/define-negative.test.ts",
+      "area": "governance",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/scan-adversarial.test.ts",
+      "area": "governance",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "prompt-injection"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/governance-compliance-policy.test.ts",
+      "area": "governance",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "risk-mapping"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/integration.test.ts",
+      "area": "groundskeeper",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/negative.test.ts",
+      "area": "groundskeeper",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/keys.unit.test.ts",
+      "area": "herald",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/delivery.int.test.ts",
+      "area": "herald",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/negative.test.ts",
+      "area": "herald",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/unit-deny-shaping.test.ts",
+      "area": "model-router",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "io"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/integration-request-contract.test.ts",
+      "area": "model-router",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/integration-fallback-chain.test.ts",
+      "area": "model-router",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "external"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/negative-malformed-decision.test.ts",
+      "area": "model-router",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/negative-authz-envelope.test.ts",
+      "area": "model-router",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/adversarial-deny-not-allow.test.ts",
+      "area": "model-router",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/model-router/tests/adversarial-hostile-payload.test.ts",
+      "area": "model-router",
+      "category": "adversarial",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/rag/tests/validation.test.ts",
+      "area": "rag",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/integration.test.ts",
+      "area": "rag",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/negative.test.ts",
+      "area": "rag",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/adversarial.test.ts",
+      "area": "rag",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/integration-pipeline.test.ts",
+      "area": "release",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/negative-input.test.ts",
+      "area": "release",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/adversarial-protocol.test.ts",
+      "area": "release",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/governance-policy.test.ts",
+      "area": "release",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/integration-multi-probe.test.ts",
+      "area": "sentinel",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/integration-default-critical.test.ts",
+      "area": "sentinel",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/negative-throwing-probe.test.ts",
+      "area": "sentinel",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/sentinel/src/__tests__/negative-malformed-config.test.ts",
+      "area": "sentinel",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/integration.test.ts",
+      "area": "warp",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/negative.test.ts",
+      "area": "warp",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/adversarial.test.ts",
+      "area": "warp",
+      "category": "adversarial",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/warp/src/__tests__/governance.test.ts",
+      "area": "warp",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/unit-extra.test.ts",
+      "area": "workflow",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "boundary"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/integration.test.ts",
+      "area": "workflow",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/negative.test.ts",
+      "area": "workflow",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/adversarial.test.ts",
+      "area": "workflow",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/governance.test.ts",
+      "area": "workflow",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/integration.test.ts",
+      "area": "assay",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/negative.test.ts",
+      "area": "assay",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/adversarial.test.ts",
+      "area": "assay",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/governance.test.ts",
+      "area": "assay",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/integration-server-verifier.test.ts",
+      "area": "auth",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/integration-roles-permissions.test.ts",
+      "area": "auth",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "cross-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/negative-extra.test.ts",
+      "area": "vault",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/adversarial-extra.test.ts",
+      "area": "vault",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/integration-compose.test.ts",
+      "area": "assay",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/negative-runtime.test.ts",
+      "area": "assay",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/assay/src/__tests__/adversarial-authz.test.ts",
+      "area": "assay",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/negative-unsupported.test.ts",
+      "area": "atlas",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "unsupported"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/adversarial-protocol.test.ts",
+      "area": "atlas",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/atlas/src/__tests__/governance-precondition.test.ts",
+      "area": "atlas",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/negative-degenerate.test.ts",
+      "area": "backup",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/adversarial-freshness.test.ts",
+      "area": "backup",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/integration-chain.test.ts",
+      "area": "canon",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/canon/src/__tests__/negative-seo.test.ts",
+      "area": "canon",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/unit-build.test.ts",
+      "area": "consent",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/negative-unsupported.test.ts",
+      "area": "consent",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "unsupported"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/consent/src/__tests__/adversarial-replay.test.ts",
+      "area": "consent",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.integration.auth.test.ts",
+      "area": "dialog",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "external"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.negative.error-envelope.test.ts",
+      "area": "dialog",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/dialog/tests/dialog.adversarial.injection.test.ts",
+      "area": "dialog",
+      "category": "adversarial",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "prompt-injection"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/governance/src/__tests__/decide-unit-sellable.test.ts",
+      "area": "governance",
+      "category": "unit",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "pure"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/define-integration-empty.test.ts",
+      "area": "governance",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/define-negative-capabilities.test.ts",
+      "area": "governance",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/governance/src/__tests__/scan-adversarial-seo.test.ts",
+      "area": "governance",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "prompt-injection"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/integration-no-alert.test.ts",
+      "area": "groundskeeper",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/groundskeeper/src/__tests__/negative-degenerate.test.ts",
+      "area": "groundskeeper",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/delivery-quiet-hours.int.test.ts",
+      "area": "herald",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/herald/src/__tests__/negative-unsupported.test.ts",
+      "area": "herald",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "unsupported"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/integration-external.test.ts",
+      "area": "rag",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "external"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/negative-unsupported.test.ts",
+      "area": "rag",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "unsupported"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/rag/tests/adversarial-resource-abuse.test.ts",
+      "area": "rag",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "resource-abuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/integration-drift.test.ts",
+      "area": "release",
+      "category": "integration",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/negative-schema.test.ts",
+      "area": "release",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/adversarial-drift.test.ts",
+      "area": "release",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/governance-freshness.test.ts",
+      "area": "release",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/integration-clean.test.ts",
+      "area": "warp",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/negative-malformed.test.ts",
+      "area": "warp",
+      "category": "negative",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/warp/src/__tests__/adversarial-evasion.test.ts",
+      "area": "warp",
+      "category": "adversarial",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/warp/src/__tests__/governance-clean.test.ts",
+      "area": "warp",
+      "category": "governance",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "process"
+      },
+      "author": "qa"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/integration-resume.test.ts",
+      "area": "workflow",
+      "category": "integration",
+      "risk": "medium",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "intra-system"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/negative-presentation.test.ts",
+      "area": "workflow",
+      "category": "negative",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "input-validation"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/adversarial-empty.test.ts",
+      "area": "workflow",
+      "category": "adversarial",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "protocol-misuse"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/governance-release.test.ts",
+      "area": "workflow",
+      "category": "governance",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "kind": "authz-policy"
+      },
+      "author": "qa",
+      "reviewer": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/e2e-session-lifecycle.test.ts",
+      "area": "auth",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/auth/src/__tests__/e2e-session-recovery.test.ts",
+      "area": "auth",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/e2e-capture-flow.test.ts",
+      "area": "pay",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/pay/src/__tests__/e2e-refund-recovery.test.ts",
+      "area": "pay",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/e2e-full-run.test.ts",
+      "area": "backup",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/backup/src/__tests__/e2e-failure-recovery.test.ts",
+      "area": "backup",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/e2e-attestation.test.ts",
+      "area": "release",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/release/src/__tests__/e2e-attestation-deny.test.ts",
+      "area": "release",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/e2e.test.ts",
+      "area": "workflow",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/workflow/src/__tests__/e2e-recovery.test.ts",
+      "area": "workflow",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/e2e-lifecycle.test.ts",
+      "area": "vault",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/vault/src/__tests__/e2e-recovery.test.ts",
+      "area": "vault",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/e2e-lifecycle.test.ts",
+      "area": "billing",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "happy"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/billing/src/__tests__/e2e-refund-recovery.test.ts",
+      "area": "billing",
+      "category": "e2e",
+      "risk": "high",
+      "triggers": [
+        "pre-merge"
+      ],
+      "subtypes": {
+        "path_kind": "recovery"
+      },
+      "author": "infra"
+    },
+    {
+      "path": "packages/chat/src/__tests__/session.test.ts",
+      "area": "chat",
+      "category": "unit",
+      "subtypes": {
+        "kind": "pure"
+      },
+      "risk": "medium",
+      "author": "infra",
+      "triggers": [
+        "pre-merge"
+      ]
+    },
+    {
+      "path": "packages/chat/src/__tests__/policy.test.ts",
+      "area": "chat",
+      "category": "unit",
+      "subtypes": {
+        "kind": "pure"
+      },
+      "risk": "medium",
+      "author": "infra",
+      "triggers": [
+        "pre-merge"
+      ]
+    }
+  ]
+}

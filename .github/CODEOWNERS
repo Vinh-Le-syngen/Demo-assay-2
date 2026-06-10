@@ -1,0 +1,11 @@
+# Code owners for the sys monorepo.
+#
+# Any path listed here requires an approving review from the named owner
+# before a pull request can merge into a branch that has "Require review
+# from Code Owners" enabled (currently: main).
+#
+# This single rule is what enforces the promotion protocol on a
+# personal-account repo: every "staging -> main" PR needs Sinuhe's review.
+# Do not broaden the owners on main without updating docs/GOVERNANCE.md.
+
+* @sinuhearroyo-pixel

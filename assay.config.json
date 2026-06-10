@@ -1,0 +1,302 @@
+{
+  "testRoots": [
+    "packages"
+  ],
+  "manifestPath": "tests/manifest.json",
+  "gates": {
+    "noUntracked": true,
+    "noStale": true,
+    "requireTriggerForHighRisk": true,
+    "noShells": true,
+    "coverage": true
+  },
+  "warnOnly": [],
+  "coverage": {
+    "profile": "full",
+    "areaProfiles": {
+      "assay": "full",
+      "atlas": "full",
+      "auth": "full",
+      "backup": "full",
+      "billing": "full",
+      "canon": "full",
+      "chat": "lightweight",
+      "checkpoint": "full",
+      "consent": "full",
+      "dialog": "full",
+      "errors": "lightweight",
+      "gatekeeper": "full",
+      "governance": "full",
+      "groundskeeper": "full",
+      "herald": "full",
+      "model-router": "full",
+      "pay": "full",
+      "rag": "full",
+      "release": "full",
+      "reporting": "lightweight",
+      "secrets": "lightweight",
+      "sentinel": "full",
+      "telemetry": "lightweight",
+      "vault": "full",
+      "warden": "lightweight",
+      "warp": "full",
+      "workflow": "full"
+    },
+    "overrides": {
+      "assay": {
+        "e2e": {
+          "required": false,
+          "reason": "library; audit() decision logic is covered by the integration suite, the sys-assay CLI/node-host fs shell is out of decision scope"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no logged assay regression to guard; gate edge-cases pinned in the negative/engine/taxonomy suites"
+        }
+      },
+      "atlas": {
+        "e2e": {
+          "required": false,
+          "reason": "no full lifecycle/pipeline; stateless pure functions with no queue-fire-land flow to drive end-to-end"
+        },
+        "integration": {
+          "required": false,
+          "reason": "pure IO-free engine over an injected graph; no components, DB, or external systems to compose"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no tracked previously-broken behaviors for atlas; a regression test would be synthetic"
+        }
+      },
+      "backup": {
+        "governance": {
+          "required": false,
+          "reason": "storage-agnostic library makes no authz/risk-mapping/policy decision; retention policy lives in the consuming project"
+        },
+        "regression": {
+          "required": false,
+          "reason": "the one fixed checksum-collision bug (forgeable path:size join) is guarded by the adversarial suite's field-boundary case; no other behavioral regression history to pin separately"
+        }
+      },
+      "canon": {
+        "e2e": {
+          "required": false,
+          "reason": "pure zod schemas + policy data + JSON-Schema emission; no runtime or pipeline lifecycle to drive end-to-end"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no behavioral runtime; schema/policy invariants pinned by the unit/governance/negative suites"
+        }
+      },
+      "chat": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "checkpoint": {
+        "e2e": {
+          "required": false,
+          "reason": "pure git-state gate harness with no lifecycle/pipeline to drive end-to-end"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no checkpoint regression history; no concrete previously-broken behavior to pin"
+        }
+      },
+      "consent": {
+        "e2e": {
+          "required": false,
+          "reason": "no consent UI/banner/cookie runtime in-package; the host owns the end-to-end flow"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no prior shipped consent defect; edge behavior covered as unit/negative/adversarial"
+        }
+      },
+      "dialog": {
+        "e2e": {
+          "required": false,
+          "reason": "thin fetch adapter; cadre-os owns turn-taking/orchestration so real end-to-end dialog only exists in the service"
+        },
+        "governance": {
+          "required": false,
+          "reason": "adapter makes no policy decision; routing/sovereignty policy lives in model-router and governance"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no fixed dialog-adapter bug; contract/validation edges covered by the negative and adversarial suites"
+        }
+      },
+      "errors": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "gatekeeper": {
+        "e2e": {
+          "required": false,
+          "reason": "owns only the ALLOW/DENY/REVIEW decision; runs no tests/git/promotion lifecycle to exercise end-to-end"
+        },
+        "integration": {
+          "required": false,
+          "reason": "pure single-function decider over caller-supplied facts; composition with CI/checkpoint lives in the callers"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no prior gatekeeper defect; edge-grammar and precedence covered by the unit-boundary and governance suites"
+        }
+      },
+      "governance": {
+        "e2e": {
+          "required": false,
+          "reason": "pure decision engine; deciders compute verdicts from in-memory records + injected policy with no external boundary"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped governance defect; decider edge cases covered as unit/adversarial assertions"
+        }
+      },
+      "groundskeeper": {
+        "adversarial": {
+          "required": false,
+          "reason": "detector inputs are internal trusted operational rows, not an external attack surface"
+        },
+        "e2e": {
+          "required": false,
+          "reason": "pure run-summarize-alert library with no lifecycle/persistence/process boundary"
+        },
+        "governance": {
+          "required": false,
+          "reason": "emits alert decisions but enforces no authz/gate/policy contract"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped groundskeeper defect; detector skip/severity edges covered by unit + negative"
+        }
+      },
+      "herald": {
+        "adversarial": {
+          "required": false,
+          "reason": "no hostile-input surface; recipient prefs are first-party in-process config and the engine does zero IO"
+        },
+        "e2e": {
+          "required": false,
+          "reason": "pure decision engine; host owns the end-to-end notification path (event ingestion, retry, real delivery)"
+        },
+        "governance": {
+          "required": false,
+          "reason": "channel selection is policy mechanics, not an authz/allow-deny gate contract"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped herald defect; quiet-window/silent-channel edges covered as unit assertions"
+        }
+      },
+      "model-router": {
+        "e2e": {
+          "required": false,
+          "reason": "thin fetch adapter; the real routing lifecycle runs server-side with no in-process pipeline to exercise"
+        },
+        "governance": {
+          "required": false,
+          "reason": "routing policy (sovereignty/cost) is decided server-side; the client adapter only relays the verdict"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped model-router defect; the adapter surface has no concrete regressed edge to pin"
+        }
+      },
+      "pay": {
+        "regression": {
+          "required": false,
+          "reason": "no historically-broken behavior to pin; idempotency + threshold boundaries are guarded by adversarial + governance suites"
+        }
+      },
+      "rag": {
+        "e2e": {
+          "required": false,
+          "reason": "thin HTTP client; no full retrieve-classify-land pipeline client-side, the engine lives in cadre-os"
+        },
+        "governance": {
+          "required": false,
+          "reason": "grounding/scope/sovereignty policy is decided server-side; the client only validates pack shape"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped rag bug; nothing concrete to regression-pin in the contract + client surface"
+        }
+      },
+      "release": {
+        "regression": {
+          "required": false,
+          "reason": "no concrete previously-broken release-set/adoption behavior; drift/forgery edges covered by adversarial + negative"
+        }
+      },
+      "reporting": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "secrets": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "sentinel": {
+        "adversarial": {
+          "required": false,
+          "reason": "probes are first-party injected functions; no probe parses untrusted input"
+        },
+        "e2e": {
+          "required": false,
+          "reason": "pure in-process health monitor; cross-process wiring lives in the consuming project"
+        },
+        "governance": {
+          "required": false,
+          "reason": "emits alert decisions but enforces no authz/gate/deploy policy contract"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no recorded incident on sentinel's pure surface; degenerate edges covered under negative"
+        }
+      },
+      "telemetry": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "vault": {
+        "regression": {
+          "required": false,
+          "reason": "no version history of behavioral regressions; pure inject-seam decide/service logic with no prior fix to pin"
+        }
+      },
+      "warden": {
+        "regression": {
+          "required": false,
+          "reason": "new package, no shipped defects to pin"
+        }
+      },
+      "warp": {
+        "e2e": {
+          "required": false,
+          "reason": "pure synchronous config cross-validation harness with no process lifecycle, network, or persistence"
+        },
+        "regression": {
+          "required": false,
+          "reason": "no shipped warp defect; banned-token escape-hatch edges covered under adversarial"
+        }
+      },
+      "workflow": {
+        "regression": {
+          "required": false,
+          "reason": "advance()/validateWorkflowDefinition are pure stateless functions; no persisted state or historical bug to pin"
+        }
+      }
+    }
+  }
+}

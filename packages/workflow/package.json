@@ -1,0 +1,34 @@
+{
+  "name": "@eng/workflow",
+  "version": "0.0.1",
+  "description": "Control-plane workflow engine: the WorkflowDefinition contract + a pure executor (advance/gates/transitions). App specifics injected as seams; zero runtime deps. Extracted from Qarar (ADR-0002/0007).",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "pnpm build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

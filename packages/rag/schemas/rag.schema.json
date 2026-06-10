@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sys/contracts/rag.schema.json",
+  "title": "SYS RAG contract",
+  "$defs": {
+    "RagConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "instance"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "instance": { "type": "string", "description": "Per-consumer RAG instance/profile id (e.g. \"qarar\")." },
+        "citationRequired": { "type": "boolean", "default": true },
+        "defaultScope": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "RetrievalRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "query"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "query": { "type": "string", "minLength": 1 },
+        "scope": { "type": "array", "items": { "type": "string" }, "description": "Corpora/collections to search, e.g. [\"canon\",\"docs\"]." },
+        "topK": { "type": "integer", "minimum": 1, "maximum": 50, "default": 8 },
+        "citationRequired": { "type": "boolean", "default": true },
+        "dataSovereignty": { "type": "string" },
+        "tenant": { "type": "string" }
+      }
+    },
+    "Citation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sourceId", "citation"],
+      "properties": {
+        "sourceId": { "type": "string" },
+        "citation": { "type": "string", "description": "Human-readable source reference." },
+        "uri": { "type": "string" }
+      }
+    },
+    "Snippet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "sourceId", "citation"],
+      "properties": {
+        "text": { "type": "string" },
+        "sourceId": { "type": "string" },
+        "citation": { "type": "string" },
+        "score": { "type": "number" }
+      }
+    },
+    "ContextPack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "contextPackId", "query", "snippets"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "contextPackId": { "type": "string" },
+        "query": { "type": "string" },
+        "snippets": { "type": "array", "items": { "$ref": "#/$defs/Snippet" } },
+        "citations": { "type": "array", "items": { "$ref": "#/$defs/Citation" } },
+        "staleness": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["sourceId", "reason"],
+            "properties": { "sourceId": { "type": "string" }, "reason": { "type": "string" } }
+          }
+        }
+      }
+    }
+  }
+}

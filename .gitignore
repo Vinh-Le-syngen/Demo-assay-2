@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+coverage/
+.turbo/
+*.tsbuildinfo
+
+.stryker-tmp/
+reports/mutation/
+packages/*/*.tgz
+
+# Parallel-agent worktrees (per global Claude conventions)
+.claude/worktrees/

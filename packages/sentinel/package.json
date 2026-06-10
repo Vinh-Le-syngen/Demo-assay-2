@@ -1,0 +1,40 @@
+{
+  "name": "@sys/sentinel",
+  "version": "0.0.1",
+  "description": "Health monitoring — dependency probes, health derivation, and alert decision. Library or `sys-sentinel` CLI.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "sys-sentinel": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./probes": {
+      "types": "./dist/probes.d.ts",
+      "import": "./dist/probes.js",
+      "require": "./dist/probes.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

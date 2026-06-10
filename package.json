@@ -1,0 +1,32 @@
+{
+  "name": "sys",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Reusable, 5-plane-aligned subsystems shared across apps (@sys/*).",
+  "packageManager": "pnpm@10.30.3",
+  "scripts": {
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r typecheck",
+    "lint:boundaries": "node scripts/check-boundaries.mjs",
+    "check:taxonomy": "node scripts/check-taxonomy.mjs",
+    "check:assay-areas": "node scripts/check-assay-areas.mjs",
+    "gen:assay-areas": "node scripts/gen-assay-areas.mjs",
+    "assay": "node scripts/check-assay-areas.mjs && pnpm --filter @sys/assay build && node packages/assay/dist/cli.js --config assay.config.json",
+    "check:release": "pnpm --filter @sys/release build && node packages/release/dist/cli.js set validate",
+    "check": "pnpm lint:boundaries && pnpm check:taxonomy && pnpm typecheck && pnpm test && pnpm assay && pnpm check:release",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release:set": "pnpm --filter @sys/release build && node packages/release/dist/cli.js set create --write",
+    "release:pack": "pnpm check && pnpm -r build && pnpm -r pack --pack-destination .releases/artifacts",
+    "release:publish": "pnpm check && pnpm -r build && pnpm --filter \"@sys/*\" publish --no-git-checks",
+    "release": "pnpm check && pnpm -r build && pnpm -r publish --no-git-checks"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.31.0",
+    "@stryker-mutator/core": "^9.6.1",
+    "@stryker-mutator/vitest-runner": "^9.6.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18",
+    "yaml": "^2.6.1"
+  }
+}

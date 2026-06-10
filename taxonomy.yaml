@@ -1,0 +1,1095 @@
+# sys — canonical taxonomy / plane registry.
+#
+# The physical tree is organized by SUBSYSTEM NAME (packages/*), not by plane — because
+# real subsystems are cross-plane (one primary plane, responsibilities in others) and a
+# plane-first folder tree would mislead. This file is the classification layer: it maps
+# every entity to its plane facets.
+#
+# NAMING (canonical: qarar/docs/architecture/planes.md): the `planes` below ARE the
+# **System Planes (P5)** — the cadre-os five (Control/Data/Observability/Governance/Recovery),
+# describing HOW a system is run. This is one of the two plane axes. The other is the
+# **Business Planes** (Market/Offering/Interaction/Delivery/Financial = WHAT part of the
+# business). Only business-capability systems carry one (see PLANES.md; source: qarar
+# planes.md §7): billing/pay → Financial, vault → Delivery (catalog/case → Offering/Delivery aren't
+# in /sys yet). Platform / governance / cross-cutting systems (auth, assay, atlas, canon, …)
+# intentionally have NONE — they serve every Business plane, so a single home would be wrong. A
+# package MAY mirror its Business plane here via the optional `business_planes` field (validated
+# against `business_planes` below). Inside P5: a @sys/* package is a Data-plane system (owns truth),
+# a @eng/* package is a Control-plane engine; Obs/Governance/Recovery wrap both. Full doctrine: PLANES.md.
+#
+# RULE: taxonomy = identity, kind, plane, path, purpose, + provenance (owner / last_reviewed /
+# status). NOT implementation detail (no build/tsconfig/runtime config duplicated here). Keep it
+# small and durable. Enforced by scripts/check-taxonomy.mjs — the package-catalog gate: every
+# packages/* must be classified, carry complete provenance, and have a README + CHANGELOG.
+#
+# MEMBERSHIP: this file classifies what IS here; MEMBERSHIP.md is the canonical rule for what
+# BELONGS here (the membership test, per-package origin + canonical/thin-client, and the
+# explicit exclusions). Add a package here only after it passes that test.
+
+# Control-plane facets (see header). Used as primary_plane / secondary_planes below.
+planes:
+  - control # principal/session/tenant/permission context; decides what proceeds
+  - data # concrete provider interaction (crypto, IO, network)
+  - observability # structured telemetry; emits, never decides
+  - governance # policy, permission model, invariants, the stable contract
+  - recovery # expiry, refresh/retry, forced re-auth, degraded mode
+
+# Business planes — the SECOND, orthogonal axis (WHAT part of the business). Consumer-owned
+# (Qarar); optional here via a per-entity `business_planes: [...]`. Not all packages have one.
+business_planes:
+  - market # demand, positioning, acquisition
+  - offering # the product/service catalog & pricing
+  - interaction # how customers engage (consent, dialog, support)
+  - delivery # fulfilment, evidence, operations
+  - financial # billing, payment, revenue
+
+entity_kinds:
+  - app
+  - system
+  - package
+  - adapter
+  - method
+  - middleware
+  - contract
+  - policy
+  - runtime
+  - doc
+
+# Lifecycle status per package (provenance). Enforced by scripts/check-taxonomy.mjs.
+statuses:
+  - active # in use, maintained
+  - experimental # usable but unstable / API may change (e.g. thin clients pending engine extraction)
+  - deprecated # scheduled for removal; do not adopt
+
+# Test posture per package — the assay coverage profile each package's test battery must meet.
+# This is the SoT for the floor: assay.config.json `coverage.areaProfiles` is GENERATED from each
+# entity's `test_profile` (scripts/gen-assay-areas.mjs); check-assay-areas.mjs fails on drift.
+test_profiles:
+  - full # unit+integration+e2e+regression+negative+adversarial+governance, >=2 each
+  - lightweight # unit+regression, >=1 each
+  - virtual # no floor (opt-out; justify in the entity purpose/comment)
+
+entities:
+  - id: sys-auth
+    kind: package
+    path: packages/auth
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/auth"
+    test_profile: full
+    primary_plane: control
+    secondary_planes: [governance, data, observability, recovery]
+    purpose: >-
+      Authentication & authorization subsystem. Establishes principal, session, tenant,
+      and permission context for app consumption; decides what may proceed. Owns Control;
+      integrates the other planes via injected seams (adapter, permission model, sink, policy).
+    # Cross-plane internal map (control-owned, integrating outward):
+    modules:
+      - path: src/core/contract.ts
+        plane: control
+        role: decision contract + injected seam interfaces (types only)
+      - path: src/core/config.ts
+        plane: control
+        role: defineAuth composition root
+      - path: src/server
+        plane: control
+        role: createServerAuth — authenticate/authorize decision surface
+      - path: src/server/verify.ts
+        plane: data
+        role: jose token verification (JWKS-first, HS256 legacy)
+      - path: src/middleware
+        plane: control
+        role: routing-only session gate (no authz branching)
+      - path: src/client/session-machine.ts
+        plane: recovery
+        role: pure session state machine (init/auth/refresh/expire/signout/error)
+      - path: src/react
+        plane: control
+        role: thin React binding (AuthProvider/useAuth) over the session machine
+      - path: src/methods
+        plane: control
+        role: enabled-method registry (declarative, tree-shakeable plugins)
+      - path: src/adapters/supabase.ts
+        plane: data
+        role: backend adapter — verify, role resolver, request-scoped RLS client
+      - path: src/observability
+        plane: observability
+        role: AuthEvent + injectable sink
+
+  - id: sys-assay
+    kind: package
+    path: packages/assay
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/assay"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "library; audit() decision logic is covered by the integration suite, the sys-assay CLI/node-host fs shell is out of decision scope",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no logged assay regression to guard; gate edge-cases pinned in the negative/engine/taxonomy suites",
+        }
+    primary_plane: governance
+    secondary_planes: [observability, data]
+    purpose: >-
+      Test registry + quality gates. Enforces that every test is registered, none are
+      stale, high-risk tests declare triggers, and no shell tests pass. Generic engine +
+      injected filesystem host; per-project config (testRoots, manifest, gates). Usable
+      as a library or the cross-language `sys-assay` CLI (schema in schema/).
+    modules:
+      - path: src/config.ts
+        plane: governance
+        role: defineAssay + zod schema + manifest schema (config contract)
+      - path: src/engine.ts
+        plane: governance
+        role: pure audit engine (untracked/stale/high-risk/shells)
+      - path: src/node-host.ts
+        plane: data
+        role: node:fs implementation of the AssayHost seam
+      - path: src/cli.ts
+        plane: governance
+        role: cross-language CLI entry (sys-assay)
+
+  - id: sys-warp
+    kind: package
+    path: packages/warp
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/warp"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure synchronous config cross-validation harness with no process lifecycle, network, or persistence",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped warp defect; banned-token escape-hatch edges covered under adversarial",
+        }
+    primary_plane: governance
+    secondary_planes: [data]
+    purpose: >-
+      Config cross-validation harness. A generic check runner (projects register named
+      checks that return error lists) plus reusable check builders — referential
+      integrity, required mappings, and the schema-genericity (banned-token) SQL scanner.
+      Checks are project-specific and injected; usable as a library or the `sys-warp` CLI.
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: defineWarp/runWarp check runner + report
+      - path: src/checks.ts
+        plane: governance
+        role: reusable check builders (referential, required-keys, banned-column SQL scan)
+      - path: src/cli.ts
+        plane: governance
+        role: cross-language CLI entry (sys-warp) — loads a project warp.config.mjs
+
+  - id: sys-sentinel
+    kind: package
+    path: packages/sentinel
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/sentinel"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure in-process health monitor; cross-process wiring lives in the consuming project",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no recorded incident on sentinel's pure surface; degenerate edges covered under negative",
+        }
+      adversarial:
+        {
+          required: false,
+          reason: "probes are first-party injected functions; no probe parses untrusted input",
+        }
+      governance:
+        {
+          required: false,
+          reason: "emits alert decisions but enforces no authz/gate/deploy policy contract",
+        }
+    primary_plane: observability
+    secondary_planes: [data, recovery]
+    purpose: >-
+      Health monitoring. Runs injected dependency probes, derives overall health from a
+      configured critical set, and decides whether the result is alert-worthy. Reusable
+      probe builders (config-presence, HTTP liveness). Library or `sys-sentinel` CLI.
+    modules:
+      - path: src/core.ts
+        plane: observability
+        role: runHealth + healthAlert + probe runner
+      - path: src/probes.ts
+        plane: data
+        role: reusable probe builders (checkConfig, configProbe, httpProbe)
+      - path: src/cli.ts
+        plane: observability
+        role: cross-language CLI entry (sys-sentinel)
+
+  - id: sys-backup
+    kind: package
+    path: packages/backup
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/backup"
+    test_profile: full
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "the one fixed checksum-collision bug (forgeable path:size join) is guarded by the adversarial suite's field-boundary case; no other behavioral regression history to pin separately",
+        }
+      governance:
+        {
+          required: false,
+          reason: "storage-agnostic library makes no authz/risk-mapping/policy decision; retention policy lives in the consuming project",
+        }
+    primary_plane: recovery
+    secondary_planes: [data]
+    purpose: >-
+      Incremental backup, extracted from Qarar's SYS-BACKUP. Pure primitives (diff,
+      deterministic manifest checksum, freshness/alert) plus a seam-injected orchestration
+      (runBackup: source→sink, idempotent, run-recorded). Storage-agnostic library; the
+      host supplies source/sink/store adapters. Qarar's backup.ts stays live until rewired.
+    modules:
+      - path: src/core.ts
+        plane: recovery
+        role: keyFor/diffForBackup/manifestChecksum/freshness (pure)
+      - path: src/orchestration.ts
+        plane: recovery
+        role: runBackup — seam-injected source→sink copy with run recording
+      - path: src/cli.ts
+        plane: recovery
+        role: cross-language CLI entry (sys-backup) — run or --check-freshness
+
+  - id: sys-groundskeeper
+    kind: package
+    path: packages/groundskeeper
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/groundskeeper"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure run-summarize-alert library with no lifecycle/persistence/process boundary",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped groundskeeper defect; detector skip/severity edges covered by unit + negative",
+        }
+      adversarial:
+        {
+          required: false,
+          reason: "detector inputs are internal trusted operational rows, not an external attack surface",
+        }
+      governance:
+        {
+          required: false,
+          reason: "emits alert decisions but enforces no authz/gate/policy contract",
+        }
+    primary_plane: observability
+    secondary_planes: [governance]
+    purpose: >-
+      Operational-hygiene detectors, extracted from Qarar's SYS-GROUNDSKEEPER. Generic
+      harness (run detectors → summarize → alert decision) plus reusable detector builders
+      (agingDetector for stale/aging rows, expiryDetector for two-tier expiry). Projects
+      supply their own detectors/rows. Library or `sys-groundskeeper` CLI.
+    modules:
+      - path: src/core.ts
+        plane: observability
+        role: runHousekeeping/summarize/evaluateHousekeeping (pure)
+      - path: src/detectors.ts
+        plane: observability
+        role: reusable detector builders (aging, expiry)
+      - path: src/cli.ts
+        plane: observability
+        role: cross-language CLI entry (sys-groundskeeper)
+
+  - id: sys-warden
+    kind: package
+    path: packages/warden
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: active
+    npm: "@sys/warden"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: observability
+    secondary_planes: [control]
+    purpose: >-
+      Worktree↔agent ownership for repos run by many parallel agents + humans: who holds which
+      git worktree. Does not invent a decision engine — reuses @sys/sentinel (liveness via
+      runHealth) and @sys/groundskeeper (reclaim via agingDetector), bundled into the build so
+      the tarball/CLI is self-contained. Plus an atomic mkdir claim lease for non-session
+      workers. Library or `sys-warden` CLI; non-node consumers run the bundled cli.cjs.
+    modules:
+      - path: src/core.ts
+        plane: observability
+        role: pure decisions — classify/ownershipHealth/reclaimableFindings (reuse sentinel + groundskeeper)
+      - path: src/claim.ts
+        plane: control
+        role: atomic mkdir claim lease (mutual exclusion for non-session workers)
+      - path: src/adapters.ts
+        plane: data
+        role: node I/O — git worktrees, ~/.claude/sessions registry, process liveness
+      - path: src/cli.ts
+        plane: observability
+        role: cross-language CLI entry (sys-warden)
+
+  - id: sys-herald
+    kind: package
+    path: packages/herald
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/herald"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure decision engine; host owns the end-to-end notification path (event ingestion, retry, real delivery)",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped herald defect; quiet-window/silent-channel edges covered as unit assertions",
+        }
+      adversarial:
+        {
+          required: false,
+          reason: "no hostile-input surface; recipient prefs are first-party in-process config and the engine does zero IO",
+        }
+      governance:
+        {
+          required: false,
+          reason: "channel selection is policy mechanics, not an authz/allow-deny gate contract",
+        }
+    primary_plane: control
+    secondary_planes: [governance]
+    purpose: >-
+      Notification decision + delivery-harness subsystem. Pure NotificationPolicyEngine
+      (intent policy + recipient preferences/consent + clock → message plan) with a
+      first-class suppression model, the WhatsApp Cloud-API capability rule, and
+      three-level idempotency contracts. Owns reusable Control/Governance MECHANISMS only:
+      no Supabase, no provider creds, no host vocabulary. The host supplies adapters,
+      persistence, event taxonomy, templates, and policy config (see Qarar apps/api/lib/notify).
+    modules:
+      - path: src/core.ts
+        plane: control
+        role: planNotification + whatsappDeliverable + idempotency keys (pure)
+      - path: src/types.ts
+        plane: control
+        role: canonical envelope + classification + policy + plan + adapter interfaces
+
+  - id: sys-atlas
+    kind: package
+    path: packages/atlas
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/atlas"
+    test_profile: full
+    test_overrides:
+      integration:
+        {
+          required: false,
+          reason: "pure IO-free engine over an injected graph; no components, DB, or external systems to compose",
+        }
+      e2e:
+        {
+          required: false,
+          reason: "no full lifecycle/pipeline; stateless pure functions with no queue-fire-land flow to drive end-to-end",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no tracked previously-broken behaviors for atlas; a regression test would be synthetic",
+        }
+    primary_plane: governance
+    secondary_planes: [data]
+    purpose: >-
+      Dependency-graph impact analysis + propagation guard, extracted from cadre-os SYS-ATLAS.
+      Pure engine over a declared file dependency graph: transitive impact closure of a change,
+      graph referential-integrity validation, and propagation-gap detection (a source changed but
+      not its declared dependents). The graph is project-supplied; the engine is generic and
+      IO-free. Library or the `sys-atlas` CLI.
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: affected / validateGraph / propagationGaps — pure impact engine
+      - path: src/cli.ts
+        plane: governance
+        role: cross-language CLI entry (sys-atlas) — loads a project atlas.config.mjs
+
+  - id: sys-checkpoint
+    kind: package
+    path: packages/checkpoint
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/checkpoint"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure git-state gate harness with no lifecycle/pipeline to drive end-to-end",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no checkpoint regression history; no concrete previously-broken behavior to pin",
+        }
+    primary_plane: governance
+    secondary_planes: [control]
+    purpose: >-
+      Git-safety gate harness, extracted from cadre-os SYS-CHECKPOINT. A generic runner over
+      named policy gates that inspect an injected git state, plus reusable gate builders
+      (protected-branch, author, clean-tree, protected-path). Encodes deploy-discipline rules
+      (feature→staging→main; allow-listed commit author) as composable checks. Pure/IO-free
+      engine; the CLI gathers git state. Library or the `sys-checkpoint` CLI.
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: runCheckpoint gate runner + GitState/Gate contract (pure)
+      - path: src/gates.ts
+        plane: governance
+        role: reusable gate builders (protected-branch, author, clean-tree, protected-path)
+      - path: src/cli.ts
+        plane: control
+        role: gathers git state + loads a project checkpoint.config.mjs (sys-checkpoint)
+
+  - id: sys-consent
+    kind: package
+    path: packages/consent
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/consent"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "no consent UI/banner/cookie runtime in-package; the host owns the end-to-end flow",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no prior shipped consent defect; edge behavior covered as unit/negative/adversarial",
+        }
+    primary_plane: governance
+    secondary_planes: [control, data]
+    purpose: >-
+      Cookie/script consent — the category vocabulary, a pure ALLOW/DENY decision engine
+      ("may this technology run in this context?"), and the consent-decision contract. The host
+      supplies the concrete vendor registry, persistence, and UI surfaces; safe default is
+      necessary-only and a stale policy/registry version forces re-prompt. Distinct from any
+      authenticated processing-consent (e.g. PDPL) system of record the host owns separately.
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: consent vocabulary + pure canUse/canLoadVendor/requiresReprompt engine + contract
+
+  - id: sys-gatekeeper
+    kind: package
+    path: packages/gatekeeper
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/gatekeeper"
+    test_profile: full
+    test_overrides:
+      integration:
+        {
+          required: false,
+          reason: "pure single-function decider over caller-supplied facts; composition with CI/checkpoint lives in the callers",
+        }
+      e2e:
+        {
+          required: false,
+          reason: "owns only the ALLOW/DENY/REVIEW decision; runs no tests/git/promotion lifecycle to exercise end-to-end",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no prior gatekeeper defect; edge-grammar and precedence covered by the unit-boundary and governance suites",
+        }
+    primary_plane: governance
+    secondary_planes: [control]
+    purpose: >-
+      Promotion gate, extracted from cadre-os SYS-GATEKEEPER's promotion role (promote-staging.sh,
+      ADR-0037). A pure ALLOW/DENY/REVIEW verdict over the facts of a proposed branch promotion
+      (allowed edge, tests green, gate violations, risk, human approval) + a canonical
+      staging-first policy (feature→staging→main; production holds for a human). The caller
+      supplies facts (tests from CI, gate violations from @sys/checkpoint); this owns only the
+      decision. Library or the `sys-gatekeeper` CLI (exit ALLOW=0/DENY=1/REVIEW=2).
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: promotionVerdict + stagingFirstPolicy (pure decision)
+      - path: src/cli.ts
+        plane: control
+        role: cross-language CLI entry (sys-gatekeeper) — verdict from flags + optional policy module
+
+  - id: sys-pay
+    kind: package
+    path: packages/pay
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    business_planes: [financial] # payment orchestration — revenue/financial axis
+    npm: "@sys/pay"
+    test_profile: full
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "no historically-broken behavior to pin; idempotency + threshold boundaries are guarded by adversarial + governance suites",
+        }
+    primary_plane: control
+    secondary_planes: [governance, data, observability, recovery]
+    purpose: >-
+      Payment orchestration subsystem. Turns "customer wants a service" into "payment confirmed →
+      fulfilment allowed", provider-agnostic and configurable per country/entity. Owns Control: the
+      payment-intent lifecycle + the fulfilment verdict. Provider rails (Stripe, local gateways),
+      the store/append-only ledger, and the outbox are INJECTED seams. Webhook-authoritative,
+      idempotent, PCI-hosted (SAQ-A); each country is its own legal entity settling local currency
+      (no FX in the payment path). Pricing is upstream (catalog), not owned here.
+    modules:
+      - path: src/core/contract.ts
+        plane: control
+        role: canonical money model + injected provider/store seam interfaces (types only)
+      - path: src/core/config.ts
+        plane: governance
+        role: definePay composition root (per-country entity/currency/provider/method policy)
+      - path: src/core/machine.ts
+        plane: governance
+        role: pure intent state machine + fulfilment verdict (mayFulfil, threshold edge)
+      - path: src/core/bridge.ts
+        plane: control
+        role: createPaymentBridge — createIntent / confirmFromWebhook / refund / status
+      - path: src/observability/index.ts
+        plane: observability
+        role: PaymentSink — injectable telemetry seam
+
+  - id: sys-billing
+    kind: package
+    path: packages/billing
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    business_planes: [financial] # commercial documents — revenue/financial axis
+    npm: "@sys/billing"
+    test_profile: full
+    primary_plane: governance
+    secondary_planes: [control, data, observability]
+    purpose: >-
+      Commercial-document subsystem: invoices + credit notes issued from policy-governed payment
+      events (consumes @sys/pay's payment.captured / refund). Reusable across apps; jurisdiction
+      behavior (tax, timing, numbering, rendering, e-invoice transport) is isolated behind one
+      InvoicePolicy so adding a country = adding a policy, never touching the core. Immutable
+      documents, credit-note-only corrections, gapless cancelled-in-sequence numbering, source-event
+      idempotency, frozen party snapshots. Store + e-invoice transport are INJECTED seams. UAE first.
+    modules:
+      - path: src/core/contract.ts
+        plane: governance
+        role: commercial-document model + InvoicePolicy / BillingStore / EInvoiceAdapter seams (types)
+      - path: src/core/tax.ts
+        plane: governance
+        role: pure tax computation over classified lines (per-line / per-document rounding)
+      - path: src/core/bridge.ts
+        plane: control
+        role: createBillingBridge — issueInvoiceFromCapture / issueCreditNoteFromRefund (idempotent)
+      - path: src/policies/uae.ts
+        plane: governance
+        role: UAE InvoicePolicy — VAT 5%, disbursement-by-evidence, B2B TRN, AE numbering, HTML render
+      - path: src/render/invoice-html.ts
+        plane: data
+        role: print-ready HTML renderer (→ host PDF) for invoices + credit notes
+
+  - id: sys-vault
+    kind: package
+    path: packages/vault
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    business_planes: [delivery] # Delivery capability (vault, cases) — qarar planes.md §7
+    npm: "@sys/vault"
+    test_profile: full
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "no version history of behavioral regressions; pure inject-seam decide/service logic with no prior fix to pin",
+        }
+    primary_plane: control
+    secondary_planes: [governance, data, observability, recovery]
+    purpose: >-
+      Jurisdiction-aware document vault: versioned evidence + metadata + access decisions + audit +
+      retention policy. Owns the domain; storage (bytes), store (rows), and identity are INJECTED
+      seams (own-domain-rent-bytes). Reference-never-duplicate (cases link to a document version,
+      never copy), append-only retention (replace = new version), role+scope + explicit shares,
+      everything audited, reuse-across-services first-class. Country rules are policy/config. v1 =
+      the document side; the customer-profile layer (Person/Org/Relationship) is Phase 2.
+    modules:
+      - path: src/core/contract.ts
+        plane: control
+        role: vault domain model + injected store/storage/policy seam interfaces (types)
+      - path: src/core/access.ts
+        plane: governance
+        role: role+scope + explicit-share access policy (pure decision)
+      - path: src/core/reuse.ts
+        plane: governance
+        role: reusable-vs-missing logic (active + not-expired), pure
+      - path: src/core/service.ts
+        plane: control
+        role: createVault — upload/version/download/share/reuse/link, each access-gated + audited
+
+  - id: sys-model-router
+    kind: package
+    path: packages/model-router
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: experimental
+    npm: "@sys/model-router"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "thin fetch adapter; the real routing lifecycle runs server-side with no in-process pipeline to exercise",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped model-router defect; the adapter surface has no concrete regressed edge to pin",
+        }
+      governance:
+        {
+          required: false,
+          reason: "routing policy (sovereignty/cost) is decided server-side; the client adapter only relays the verdict",
+        }
+    primary_plane: control
+    secondary_planes: [governance, data, observability]
+    purpose: >-
+      Selects provider/model for an LLM request using capability, policy, sovereignty,
+      fallback, and cost. Thin TS contract + validation + HTTP client; the engine is
+      cadre-os lib/llm (one implementation per runtime). No engine logic reimplemented in TS.
+    modules:
+      - path: src/schema.ts
+        plane: governance
+        role: zod contract mirroring model-router.schema.json — the stable cross-language contract
+      - path: src/adapter.ts
+        plane: data
+        role: HttpModelRouterAdapter — fetch + envelope + schema validation over the cadre-os gateway
+      - path: src/index.ts
+        plane: control
+        role: re-exports (defineModelRouter, validators, adapter)
+
+  - id: sys-rag
+    kind: package
+    path: packages/rag
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: experimental
+    npm: "@sys/rag"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "thin HTTP client; no full retrieve-classify-land pipeline client-side, the engine lives in cadre-os",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped rag bug; nothing concrete to regression-pin in the contract + client surface",
+        }
+      governance:
+        {
+          required: false,
+          reason: "grounding/scope/sovereignty policy is decided server-side; the client only validates pack shape",
+        }
+    primary_plane: data
+    secondary_planes: [control, governance, observability]
+    purpose: >-
+      Produces grounded context packs with citations for downstream AI workflows. Thin TS
+      contract + validation + HTTP client; the engine is cadre-os services/sys-rag (Python).
+    modules:
+      - path: src/schema.ts
+        plane: governance
+        role: zod contract mirroring rag.schema.json (RetrievalRequest/ContextPack/Citation)
+      - path: src/adapter.ts
+        plane: data
+        role: HttpRagAdapter — retrieve/ground over the cadre-os gateway, validated
+      - path: src/index.ts
+        plane: control
+        role: re-exports
+
+  - id: sys-dialog
+    kind: package
+    path: packages/dialog
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: experimental
+    npm: "@sys/dialog"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "thin fetch adapter; cadre-os owns turn-taking/orchestration so real end-to-end dialog only exists in the service",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no fixed dialog-adapter bug; contract/validation edges covered by the negative and adversarial suites",
+        }
+      governance:
+        {
+          required: false,
+          reason: "adapter makes no policy decision; routing/sovereignty policy lives in model-router and governance",
+        }
+    primary_plane: control
+    secondary_planes: [data, governance, observability]
+    purpose: >-
+      Orchestrates multi-party dialog modes (debate/council/panel) over retrieval and
+      model-routing adapters. Thin TS contract + validation + HTTP client; engine is cadre-os lib/dialog.
+    modules:
+      - path: src/schema.ts
+        plane: governance
+        role: zod contract mirroring dialog.schema.json (DialogRequest/DialogResult/modes)
+      - path: src/adapter.ts
+        plane: data
+        role: HttpDialogAdapter — run dialog over the cadre-os gateway, validated
+      - path: src/index.ts
+        plane: control
+        role: re-exports
+
+  - id: sys-canon
+    kind: package
+    path: packages/canon
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/canon"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure zod schemas + policy data + JSON-Schema emission; no runtime or pipeline lifecycle to drive end-to-end",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no behavioral runtime; schema/policy invariants pinned by the unit/governance/negative suites",
+        }
+    primary_plane: data
+    secondary_planes: [governance]
+    purpose: >-
+      Governed-framework RECORDS. A governed framework (strategy, regulatory operating envelope,
+      positioning, product, content, pricing) is a canon (source of truth) + machine-checkable
+      config/registries + gates. This owns the records: the config SCHEMAS (cross-language contract),
+      provenance, validation, and policy data (GATE_POLICY, claim-exclude default). It does NOT decide —
+      decisions live in @eng/governance (systems own truth; engines decide). Zero app imports, pure.
+    modules:
+      - path: src/core.ts
+        plane: data
+        role: config schemas (+ provenance) + named-schema validate + policy data (GATE_POLICY) — records, no decisions
+      - path: src/seo.ts
+        plane: data
+        role: SEO governance schemas (keyword-map, page-registry, seo-rules) — records
+      - path: src/schema-export.ts
+        plane: data
+        role: JSON Schema emission (zod → JSON Schema) — the cross-language contract for non-TS runtimes
+
+  - id: eng-governance
+    kind: package
+    path: packages/governance
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@eng/governance"
+    test_profile: full
+    test_overrides:
+      e2e:
+        {
+          required: false,
+          reason: "pure decision engine; deciders compute verdicts from in-memory records + injected policy with no external boundary",
+        }
+      regression:
+        {
+          required: false,
+          reason: "no shipped governance defect; decider edge cases covered as unit/adversarial assertions",
+        }
+    primary_plane: control
+    secondary_planes: [governance, observability]
+    purpose: >-
+      Control-plane governance engine. Pure deciders that compute decisions from @sys/canon RECORDS +
+      injected policy: restricted-claims scan, claim→capability linker (positive permission), service
+      operational-readiness (commerciallySellable), unresolved service-authority, and SEO gates
+      (page-authority, cannibalization, noindex, freshness, seo-rules). Owns NO canonical truth; reads
+      records + policy and returns a decision. defineGovernance() composition root + the `sys-canon` CLI
+      (scan / validate / link). Pure functions like @sys/gatekeeper.
+    modules:
+      - path: src/decide.ts
+        plane: control
+        role: claim scan + claim→capability + service-authority/readiness deciders (pure)
+      - path: src/seo-gates.ts
+        plane: control
+        role: SEO gates (page-authority, cannibalization, noindex, freshness, seo-rules) — pure
+      - path: src/decision.ts
+        plane: governance
+        role: the common GovernanceDecision contract (allow/deny/warn/requires_review)
+      - path: src/define.ts
+        plane: control
+        role: defineGovernance — validates injected config (via @sys/canon schemas), exposes deciders
+      - path: src/cli.ts
+        plane: control
+        role: cross-language CLI entry (sys-canon) — scan / validate / link
+
+  - id: eng-workflow
+    kind: package
+    path: packages/workflow
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@eng/workflow"
+    test_profile: full
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "advance()/validateWorkflowDefinition are pure stateless functions; no persisted state or historical bug to pin",
+        }
+    primary_plane: control
+    secondary_planes: [governance]
+    purpose: >-
+      Control-plane workflow engine, extracted from Qarar (ADR-0002/0007). The WorkflowDefinition
+      contract (stages, gates, transitions, presentation) + a PURE executor: advance(def, stage, ctx)
+      → blocked/terminal/ambiguous/advanced, plus evaluateGate/pendingGates/startStage/
+      allowedTransitions and a pure validateWorkflowDefinition. App specifics (known service types,
+      role vocabulary, real gate data) are INJECTED seams; zero app imports, zero runtime deps. The
+      app wires it to data + persistence + side-effects; agent + UI read the same decisions.
+    modules:
+      - path: src/definition.ts
+        plane: governance
+        role: WorkflowDefinition contract + vocab consts + pure validator (injected service/role seams)
+      - path: src/engine.ts
+        plane: control
+        role: pure executor — evaluateGate, pendingGates, startStage, allowedTransitions, advance
+
+  - id: sys-release
+    kind: package
+    path: packages/release
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-08
+    status: active
+    npm: "@sys/release"
+    test_profile: full
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "no concrete previously-broken release-set/adoption behavior; drift/forgery edges covered by adversarial + negative",
+        }
+    primary_plane: governance
+    secondary_planes: [data]
+    purpose: >-
+      Release attestor. Records release SETS (calendar-versioned, immutable bundles of package +
+      contract versions) and validates product ADOPTION (sys.lock.json) against declared deps and
+      vendored tarball metadata. Pure core + injected ReleaseHost (file IO + tarball-manifest read);
+      usable as a library or the sys-release CLI. Owns Governance: it ATTESTS what Changesets
+      produced (it does NOT compute version bumps, changelogs, or publish). Integrates Data via the
+      host seam.
+    modules:
+      - path: src/release-set.ts
+        plane: governance
+        role: createReleaseSet + validateReleaseSet (drift gate) — pure, over injected host
+      - path: src/adoption.ts
+        plane: governance
+        role: validateAdoption — diff sys.lock.json claim vs declared deps + tarball metadata
+      - path: src/decide.ts
+        plane: governance
+        role: decide() — fold findings into a ReleaseDecision (mirrors @eng/governance contract)
+      - path: src/schemas.ts
+        plane: governance
+        role: zod schemas (release set + adoption record) — runtime contract source of truth
+      - path: src/node-host.ts
+        plane: data
+        role: node:fs implementation of the ReleaseHost seam (incl. tar -xOf tarball read)
+      - path: src/cli.ts
+        plane: governance
+        role: sys-release CLI entry (set create|validate, adoption validate)
+
+  - id: sys-errors
+    kind: package
+    path: packages/errors
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: active
+    npm: "@sys/errors"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: governance
+    secondary_planes: [observability]
+    purpose: >-
+      Error-code registry + classification + declarative alert routing. DOMAIN.AREA.CONDITION with
+      the domain vocabulary as data (serves substrate RT/INT/DOM/CTL/EXP and product AUTH/DOC/AML
+      registries alike). Authoritative retryable. Emits error occurrences via @sys/telemetry.
+    modules:
+      - path: src/core.ts
+        plane: governance
+        role: lookup/isRetryable/classify/validateRegistry/alertPlan/toTelemetryEvent (pure)
+      - path: src/types.ts
+        plane: governance
+        role: ErrorRegistry / ErrorSpec / AlertPolicy contracts
+
+  - id: sys-telemetry
+    kind: package
+    path: packages/telemetry
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: active
+    npm: "@sys/telemetry"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: observability
+    secondary_planes: [governance]
+    purpose: >-
+      The observability event spine. Pure event model + correlation (x-request-id / W3C
+      traceparent), redaction (sensitive keys at any depth), validation against a taxonomy, and
+      emit (validate → sample → redact → sink; error/fatal never sampled). Injected sink; no I/O.
+    modules:
+      - path: src/core.ts
+        plane: observability
+        role: correlation/redact/validateEvent/emit (pure; injected sink + rand)
+      - path: src/types.ts
+        plane: observability
+        role: TelemetryEvent / Sink / TelemetryConfig contracts
+
+  - id: sys-reporting
+    kind: package
+    path: packages/reporting
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: active
+    npm: "@sys/reporting"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: observability
+    secondary_planes: [governance]
+    purpose: >-
+      Declarative report definitions + pure aggregation (filter/window/group/metrics) + 5-field UTC
+      cron matcher + CSV/JSON export. Injected DataSource/Delivery; aggregates any record stream
+      (telemetry events included). No runtime deps.
+    modules:
+      - path: src/core.ts
+        plane: observability
+        role: aggregate/isDue/toCSV/toJSON/runReport (pure engine + injected adapters)
+      - path: src/types.ts
+        plane: observability
+        role: ReportDefinition / DataSource / Delivery contracts
+
+  - id: sys-secrets
+    kind: package
+    path: packages/secrets
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: active
+    npm: "@sys/secrets"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: control
+    secondary_planes: [governance, data]
+    purpose: >-
+      Secret-reference resolver: references in code, values never. Resolves keychain
+      (injected reader) → env → fail-loud over a SecretRefs manifest. Pure core + injected
+      reader (macOS Keychain via the `security` CLI); snapshot-safe (fingerprints, never values).
+      Extracted from cadre-os SYS-WARP Phase 7 (ADR-0040/0073).
+    modules:
+      - path: src/core.ts
+        plane: control
+        role: pure resolution (resolveSecret/resolveAll/verifyRefs/expand) + snapshot/fingerprint
+      - path: src/keychain.ts
+        plane: data
+        role: macOS Keychain reader (security CLI) — the one impure adapter
+      - path: src/types.ts
+        plane: control
+        role: SecretRefs / SecretRef / SecretReader contracts
+
+  - id: sys-chat
+    kind: package
+    path: packages/chat
+    owner: unassigned # TODO: assign a team/role
+    last_reviewed: 2026-06-09
+    status: experimental
+    npm: "@sys/chat"
+    test_profile: lightweight
+    test_overrides:
+      regression:
+        {
+          required: false,
+          reason: "new package, no shipped defects to pin",
+        }
+    primary_plane: control
+    secondary_planes: [governance]
+    purpose: >-
+      Chat session manager. Pure session lifecycle (create/add/close/summarize),
+      configurable turn-ordering policy (strict-alternation or free-form), and an
+      injectable content-policy seam for host-supplied moderation. Owns Control;
+      Governance (content filtering) is injected.
+    modules:
+      - path: src/config.ts
+        plane: control
+        role: defineChat composition root + Zod schema + ContentPolicy seam interface
+      - path: src/core.ts
+        plane: control
+        role: createChatSession / addMessage / closeSession / sessionSummary (pure)

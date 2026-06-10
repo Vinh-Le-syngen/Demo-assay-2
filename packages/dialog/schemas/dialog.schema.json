@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sys/contracts/dialog.schema.json",
+  "title": "SYS Dialog contract",
+  "$defs": {
+    "DialogMode": {
+      "type": "string",
+      "enum": ["debate", "council", "panel", "copilot", "review_loop", "self-consistency"]
+    },
+    "DialogConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "providerMode"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "providerMode": { "type": "string", "enum": ["live", "stub"], "default": "stub" },
+        "maxTurns": { "type": "integer", "minimum": 1, "maximum": 50, "default": 12 }
+      }
+    },
+    "DialogRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "mode", "topic", "participants"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "mode": { "$ref": "#/$defs/DialogMode" },
+        "topic": { "type": "string", "minLength": 1 },
+        "participants": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Role names, e.g. [\"risk\",\"growth\",\"ops\"]." },
+        "retrieval": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["enabled"],
+          "properties": { "enabled": { "type": "boolean" }, "query": { "type": "string" } }
+        },
+        "arbiter": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["required"],
+          "properties": { "required": { "type": "boolean" }, "humanId": { "type": "string" } }
+        },
+        "tenant": { "type": "string" },
+        "dataSovereignty": { "type": "string" }
+      }
+    },
+    "Turn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["index", "participant", "text"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 0 },
+        "participant": { "type": "string" },
+        "text": { "type": "string" },
+        "modelDecisionId": { "type": "string", "description": "Links to the ModelRouteDecision for this turn." }
+      }
+    },
+    "DialogResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "dialogId", "mode", "transcript", "status"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "dialogId": { "type": "string" },
+        "mode": { "$ref": "#/$defs/DialogMode" },
+        "transcript": { "type": "array", "items": { "$ref": "#/$defs/Turn" } },
+        "contextPackId": { "type": "string", "description": "Present when retrieval was enabled." },
+        "status": { "type": "string", "enum": ["completed", "awaiting_arbiter", "degraded", "error"] },
+        "arbiterRequired": { "type": "boolean" }
+      }
+    }
+  }
+}

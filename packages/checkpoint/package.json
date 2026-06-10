@@ -1,0 +1,40 @@
+{
+  "name": "@sys/checkpoint",
+  "version": "0.0.1",
+  "description": "Git-safety gate harness: protected-branch / author / clean-tree / protected-path guards over an injected git state. Library or the `sys-checkpoint` CLI.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "sys-checkpoint": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./gates": {
+      "types": "./dist/gates.d.ts",
+      "import": "./dist/gates.js",
+      "require": "./dist/gates.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sys/contracts/model-router.schema.json",
+  "title": "SYS Model Router contract",
+  "$defs": {
+    "ProviderCapability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "capabilities"],
+      "properties": {
+        "provider": { "type": "string", "examples": ["anthropic", "openai", "gemini", "mistral", "ollama"] },
+        "model": { "type": "string" },
+        "capabilities": { "type": "array", "items": { "type": "string", "enum": ["chat", "tools", "vision", "long-context", "embedding", "json-mode"] } },
+        "costClass": { "type": "string", "enum": ["low", "medium", "high"] },
+        "sovereignty": { "type": "array", "items": { "type": "string" }, "description": "Allowed data domains, e.g. [\"public\",\"internal\"] or jurisdiction tags." },
+        "status": { "type": "string", "enum": ["active", "deprecated", "disabled"], "default": "active" }
+      }
+    },
+    "ModelRouterConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "providers"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "providers": { "type": "array", "items": { "$ref": "#/$defs/ProviderCapability" }, "minItems": 1 },
+        "defaultFallbackChain": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "ModelRouteRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "requiredCapabilities"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "requiredCapabilities": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "allowedProviders": { "type": "array", "items": { "type": "string" }, "description": "If set, intersect with capable providers." },
+        "dataSovereignty": { "type": "string", "description": "Domain/jurisdiction tag of the data in this request (e.g. \"qarar-customer\")." },
+        "maxCostClass": { "type": "string", "enum": ["low", "medium", "high"] },
+        "tenant": { "type": "string" },
+        "journeyId": { "type": "string", "description": "For cost attribution." }
+      }
+    },
+    "ModelRouteDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "decisionId", "outcome", "reasonCodes", "policyVersion"],
+      "properties": {
+        "schemaVersion": { "type": "string", "const": "1.0" },
+        "decisionId": { "type": "string" },
+        "outcome": { "type": "string", "enum": ["allow", "deny"] },
+        "provider": { "type": "string" },
+        "model": { "type": "string" },
+        "fallbackChain": { "type": "array", "items": { "type": "string" } },
+        "reasonCodes": { "type": "array", "items": { "type": "string" }, "examples": [["CAPABILITY_MATCH", "SOVEREIGNTY_OK"], ["POLICY_DENIED_SOVEREIGNTY"]] },
+        "estCostClass": { "type": "string", "enum": ["low", "medium", "high"] },
+        "policyVersion": { "type": "string" }
+      }
+    }
+  }
+}

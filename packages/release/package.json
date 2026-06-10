@@ -1,0 +1,45 @@
+{
+  "name": "@sys/release",
+  "version": "0.0.4",
+  "description": "Release attestor: release-set records + product adoption validation over @sys/* packages. Reads versions Changesets produced; never computes them.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "sys-release": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "schema"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./node-host": {
+      "types": "./dist/node-host.d.ts",
+      "import": "./dist/node-host.js",
+      "require": "./dist/node-host.cjs"
+    },
+    "./schema/release-set": "./schema/release-set.schema.json",
+    "./schema/sys-lock": "./schema/sys-lock.schema.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  }
+}

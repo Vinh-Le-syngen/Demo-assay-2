@@ -1,0 +1,89 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sys/assay.config.schema.json",
+  "title": "@sys/assay config",
+  "description": "Cross-language contract for assay (test registry + canonical taxonomy + quality gates). The TS engine and any non-TS runner validate against this. The category/subtype/role/plane vocabulary is canonical (see taxonomy.json), not declared here.",
+  "type": "object",
+  "required": ["testRoots"],
+  "additionalProperties": false,
+  "properties": {
+    "testRoots": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Directories (relative to the config file) to scan for test files."
+    },
+    "testPattern": {
+      "type": "string",
+      "default": "\\.(test|spec)\\.(ts|tsx)$",
+      "description": "Regex source identifying a test file."
+    },
+    "manifestPath": {
+      "type": "string",
+      "default": "tests/manifest.json",
+      "description": "Path to the test manifest JSON."
+    },
+    "gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "noUntracked": { "type": "boolean", "default": true },
+        "noStale": { "type": "boolean", "default": true },
+        "requireTriggerForHighRisk": { "type": "boolean", "default": true },
+        "noShells": { "type": "boolean", "default": true },
+        "validClassification": { "type": "boolean", "default": true },
+        "authorSeparation": { "type": "boolean", "default": true },
+        "coverage": { "type": "boolean", "default": false }
+      }
+    },
+    "shellPatterns": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expect": { "type": "string" },
+        "staticSkip": { "type": "string" },
+        "tautology": { "type": "string" }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The taxonomy is canonical and sys-owned. Consumers may only register experimental categories.",
+      "properties": {
+        "experimentalCategories": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^x-local-" },
+          "default": [],
+          "description": "Incubating categories (x-local-*); warned, never counted toward coverage."
+        }
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile": { "enum": ["full", "lightweight", "virtual"], "default": "virtual" },
+        "areaProfiles": {
+          "type": "object",
+          "additionalProperties": { "enum": ["full", "lightweight", "virtual"] }
+        },
+        "overrides": {
+          "type": "object",
+          "description": "area -> category -> override; reason is mandatory.",
+          "additionalProperties": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "object",
+              "required": ["reason"],
+              "properties": {
+                "required": { "type": "boolean" },
+                "min": { "type": "integer", "minimum": 0 },
+                "reason": { "type": "string", "minLength": 12 }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

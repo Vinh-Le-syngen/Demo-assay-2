@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sys.dev/schema/sys-lock.schema.json",
+  "title": "AdoptionRecord",
+  "description": "A product's sys.lock.json — its declared adoption of @sys/* packages. Mirrors adoptionRecordSchema in @sys/release; zod is the runtime source of truth.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "product", "packages"],
+  "properties": {
+    "schema_version": { "const": 1 },
+    "product": { "type": "string", "minLength": 1 },
+    "adopts": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": { "release_set": { "type": "string" } }
+    },
+    "packages": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z.-]+)?$" }
+    },
+    "contracts": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    },
+    "modes": {
+      "type": "object",
+      "additionalProperties": { "enum": ["warn", "strict", "off"] }
+    }
+  }
+}

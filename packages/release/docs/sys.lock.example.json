@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "product": "qarar",
+  "adopts": { "release_set": "baseline@2026.06.0" },
+  "packages": {
+    "@sys/canon": "1.0.0",
+    "@eng/governance": "1.0.0"
+  },
+  "contracts": {
+    "assay.taxonomy": 1
+  },
+  "modes": {
+    "@sys/assay.coverage": "warn"
+  }
+}

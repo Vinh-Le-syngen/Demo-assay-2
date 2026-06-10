@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "name": "baseline",
+  "version": "2026.06.0",
+  "status": "live",
+  "packages": {
+    "@eng/governance": "1.0.0",
+    "@eng/workflow": "0.0.1",
+    "@sys/assay": "0.3.0",
+    "@sys/atlas": "0.0.1",
+    "@sys/auth": "0.0.1",
+    "@sys/backup": "0.0.1",
+    "@sys/billing": "0.0.1",
+    "@sys/canon": "1.0.0",
+    "@sys/checkpoint": "0.0.1",
+    "@sys/consent": "0.0.1",
+    "@sys/dialog": "0.0.1",
+    "@sys/gatekeeper": "0.0.1",
+    "@sys/groundskeeper": "0.0.1",
+    "@sys/herald": "0.0.1",
+    "@sys/model-router": "0.0.1",
+    "@sys/pay": "0.0.1",
+    "@sys/rag": "0.0.1",
+    "@sys/release": "0.0.4",
+    "@sys/sentinel": "0.0.1",
+    "@sys/vault": "0.0.1",
+    "@sys/warp": "0.0.1"
+  },
+  "evidence": [
+    {
+      "source": "pnpm-check",
+      "ref": "passed"
+    }
+  ],
+  "owner": "sinuhe",
+  "approved_by": "sinuhe",
+  "created_at": "2026-06-08T13:18:43.847Z"
+}
