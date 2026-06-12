@@ -77,6 +77,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/auth"
+    cross_runtime: false
     test_profile: full
     primary_plane: control
     secondary_planes: [governance, data, observability, recovery]
@@ -124,6 +125,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/assay"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -164,6 +166,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/warp"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -201,6 +204,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/sentinel"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -247,6 +251,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/backup"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       regression:
@@ -284,6 +289,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/groundskeeper"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -331,6 +337,7 @@ entities:
     last_reviewed: 2026-06-09
     status: active
     npm: "@sys/warden"
+    cross_runtime: true
     test_profile: lightweight
     test_overrides:
       regression:
@@ -367,6 +374,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/herald"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -413,6 +421,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/atlas"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       integration:
@@ -453,6 +462,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/checkpoint"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -491,6 +501,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/consent"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -523,6 +534,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/gatekeeper"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       integration:
@@ -565,6 +577,7 @@ entities:
     status: active
     business_planes: [financial] # payment orchestration — revenue/financial axis
     npm: "@sys/pay"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       regression:
@@ -606,6 +619,7 @@ entities:
     status: active
     business_planes: [financial] # commercial documents — revenue/financial axis
     npm: "@sys/billing"
+    cross_runtime: false
     test_profile: full
     primary_plane: governance
     secondary_planes: [control, data, observability]
@@ -641,6 +655,7 @@ entities:
     status: active
     business_planes: [delivery] # Delivery capability (vault, cases) — qarar planes.md §7
     npm: "@sys/vault"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       regression:
@@ -678,6 +693,7 @@ entities:
     last_reviewed: 2026-06-08
     status: experimental
     npm: "@sys/model-router"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -719,6 +735,7 @@ entities:
     last_reviewed: 2026-06-08
     status: experimental
     npm: "@sys/rag"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -759,6 +776,7 @@ entities:
     last_reviewed: 2026-06-08
     status: experimental
     npm: "@sys/dialog"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -799,6 +817,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/canon"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       e2e:
@@ -837,6 +856,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@eng/governance"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       e2e:
@@ -882,6 +902,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@eng/workflow"
+    cross_runtime: false
     test_profile: full
     test_overrides:
       regression:
@@ -913,6 +934,7 @@ entities:
     last_reviewed: 2026-06-08
     status: active
     npm: "@sys/release"
+    cross_runtime: true
     test_profile: full
     test_overrides:
       regression:
@@ -956,6 +978,7 @@ entities:
     last_reviewed: 2026-06-09
     status: active
     npm: "@sys/errors"
+    cross_runtime: false
     test_profile: lightweight
     test_overrides:
       regression:
@@ -984,6 +1007,7 @@ entities:
     last_reviewed: 2026-06-09
     status: active
     npm: "@sys/telemetry"
+    cross_runtime: false
     test_profile: lightweight
     test_overrides:
       regression:
@@ -1012,6 +1036,7 @@ entities:
     last_reviewed: 2026-06-09
     status: active
     npm: "@sys/reporting"
+    cross_runtime: false
     test_profile: lightweight
     test_overrides:
       regression:
@@ -1040,6 +1065,7 @@ entities:
     last_reviewed: 2026-06-09
     status: active
     npm: "@sys/secrets"
+    cross_runtime: false
     test_profile: lightweight
     test_overrides:
       regression:
@@ -1072,6 +1098,7 @@ entities:
     last_reviewed: 2026-06-09
     status: experimental
     npm: "@sys/chat"
+    cross_runtime: true
     test_profile: lightweight
     test_overrides:
       regression:

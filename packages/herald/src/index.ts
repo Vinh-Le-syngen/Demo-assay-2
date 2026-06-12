@@ -4,3 +4,4 @@
 // adapters, persistence, credentials, event vocabulary, and policy config — never this package.
 export * from './types'
 export * from './core'
+export * from './config'

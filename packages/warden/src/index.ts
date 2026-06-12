@@ -4,3 +4,4 @@
 export * from './core'
 export * from './claim'
 export * from './adapters'
+export * from './config'

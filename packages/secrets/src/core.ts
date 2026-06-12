@@ -2,6 +2,7 @@
 // Resolution order (first hit wins): keychain (via reader) → env → missing. resolveAll fails loud on
 // a missing REQUIRED secret — never a silent empty string. The keychain side-effect lives in the
 // injected reader (see ./keychain), so this module is pure + deterministic under test.
+import { z } from 'zod'
 import { createHash } from 'node:crypto'
 import type {
   ResolveOptions,
@@ -11,9 +12,30 @@ import type {
   SnapshotEntry,
 } from './types'
 
-/** Identity helper for authoring a refs manifest with inference + a single import site. */
+const secretRefBodySchema = z
+  .object({
+    env: z.string().optional(),
+    keychain: z.string().optional(),
+    required: z.boolean().optional(),
+    description: z.string().optional(),
+    provider: z.string().optional(),
+    service: z.string().optional(),
+    account: z.string().optional(),
+  })
+  .passthrough()
+
+export const secretRefsSchema = z.object({
+  apiVersion: z.string().optional(),
+  kind: z.string().optional(),
+  metadata: z.record(z.string(), z.unknown()).optional(),
+  secrets: z.record(z.string(), secretRefBodySchema),
+})
+
+export type SecretRefsInput = z.input<typeof secretRefsSchema>
+
+/** Validates a refs manifest. Throws (ZodError) on invalid input. */
 export function defineRefs(refs: SecretRefs): SecretRefs {
-  return refs
+  return secretRefsSchema.parse(refs) as SecretRefs
 }
 
 /** Normalise the `secrets` map into a flat, named array. */

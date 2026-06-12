@@ -4,3 +4,4 @@
 export * from './core'
 export * from './seo'
 export * from './schema-export'
+export * from './config'

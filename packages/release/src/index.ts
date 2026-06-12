@@ -30,3 +30,4 @@ export {
   parseReleaseSet,
   parseAdoptionRecord,
 } from './schemas'
+export * from './config'

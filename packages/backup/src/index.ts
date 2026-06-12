@@ -3,3 +3,4 @@
 // idempotently. Projects supply source/sink/store/logger/alert adapters.
 export * from './core'
 export * from './orchestration'
+export * from './config'

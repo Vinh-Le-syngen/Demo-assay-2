@@ -4,6 +4,7 @@
 // redacts secrets/PII, applies sampling, and hands a clean event to the host-injected Sink.
 // It is PURE: `ts`/`id` are supplied on the event, and the sampling RNG is injected, so the
 // same inputs always produce the same result (deterministically testable).
+import { z } from 'zod'
 import type {
   TelemetryEvent,
   TelemetryConfig,
@@ -20,9 +21,17 @@ const DEFAULT_SENSITIVE = [
 
 const MASK = '[redacted]'
 
-/** Identity helper for a typed config. */
+export const telemetryConfigSchema = z.object({
+  taxonomy: z.record(z.string(), z.array(z.string())).optional(),
+  redaction: z.unknown().optional(),
+  sampleRate: z.number().min(0).max(1).optional(),
+})
+
+export type TelemetryConfigInput = z.input<typeof telemetryConfigSchema>
+
+/** Validates a telemetry config. Throws (ZodError) on invalid input. */
 export function defineTelemetry(config: TelemetryConfig): TelemetryConfig {
-  return config
+  return telemetryConfigSchema.parse(config) as TelemetryConfig
 }
 
 type HeaderBag = Record<string, string | undefined> | Headers

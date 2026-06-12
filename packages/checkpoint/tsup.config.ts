@@ -12,4 +12,5 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   splitting: false,
+  onSuccess: 'node scripts/emit-schema.mjs',
 })

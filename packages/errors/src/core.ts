@@ -3,6 +3,7 @@
 // host owns emission + alert delivery. `retryable` is authoritative; nothing here lets a caller flip it.
 // The domain vocabulary is data: a registry may declare `domains` to be lint-enforced, else only the
 // DOMAIN.AREA.CONDITION shape is checked.
+import { z } from 'zod'
 import type { Severity, TelemetryEvent } from '@sys/telemetry'
 import type {
   AlertDecision,
@@ -17,9 +18,28 @@ import type {
 // DOMAIN.AREA.CONDITION — uppercase alnum segments; CONDITION may contain underscores.
 const CODE_RE = /^[A-Z][A-Z0-9]*\.[A-Z0-9]+\.[A-Z0-9_]+$/
 
-/** Identity helper for authoring a registry with inference + a single import site. */
+export const errorSpecSchema = z.object({
+  code: z.string(),
+  domain: z.string(),
+  retryable: z.boolean(),
+  message: z.string().optional(),
+  remediation: z.string().optional(),
+  owner: z.string().optional(),
+  severity: z.string().optional(),
+  alert: z.string().optional(),
+  deprecated: z.boolean().optional(),
+  replacedBy: z.string().optional(),
+})
+
+export const errorRegistrySchema = z.object({
+  schemaVersion: z.number().int().positive().optional(),
+  domains: z.array(z.string()).optional(),
+  codes: z.array(errorSpecSchema),
+})
+
+/** Validates a registry at composition time. Throws (ZodError) on invalid input. */
 export function defineRegistry(registry: ErrorRegistry): ErrorRegistry {
-  return registry
+  return errorRegistrySchema.parse(registry) as ErrorRegistry
 }
 
 /** Find a spec by exact code. */

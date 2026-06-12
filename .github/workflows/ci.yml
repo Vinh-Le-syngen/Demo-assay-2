@@ -34,3 +34,8 @@ jobs:
       # 5. The Ultimate Gate: Run the strict checks
       - name: Run Sys Standard Checks
         run: pnpm check
+
+      # 6. Conformance gate — blocks on any MUST failure (R2/R7/R8).
+      #    R7 docs/ SHOULD items emit as INFO only (non-blocking).
+      - name: Conformance Gate
+        run: pnpm check:conformance --strict

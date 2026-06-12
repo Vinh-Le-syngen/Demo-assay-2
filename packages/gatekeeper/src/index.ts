@@ -4,3 +4,4 @@
 // violations from @sys/checkpoint); this package owns only the decision. Library or the
 // `sys-gatekeeper` CLI. Extracted from cadre-os SYS-GATEKEEPER's promotion role.
 export * from './core'
+export * from './config'

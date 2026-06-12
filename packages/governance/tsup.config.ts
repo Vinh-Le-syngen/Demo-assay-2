@@ -12,4 +12,5 @@ export default defineConfig({
   treeshake: true,
   splitting: false,
   external: ['@sys/canon', 'zod', 'yaml'],
+  onSuccess: 'node scripts/emit-schema.mjs',
 })
