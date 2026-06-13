@@ -39,7 +39,8 @@
   },
   "dependencies": {
     "@sys/groundskeeper": "workspace:*",
-    "@sys/sentinel": "workspace:*"
+    "@sys/sentinel": "workspace:*",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

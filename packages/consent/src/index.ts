@@ -4,3 +4,4 @@
 // from authenticated processing-consent (e.g. PDPL), which the host owns as a separate SoR.
 export * from './core'
 export * from './service'
+export * from './config'

@@ -3,6 +3,8 @@
 // Pure and IO-free: the project (or the CLI) gathers the GitState from git and supplies it.
 // Extracted from cadre-os SYS-CHECKPOINT (pre-push-guard / pre-commit chain).
 
+import { z } from 'zod'
+
 /** A snapshot of the git situation a gate decides on. All fields optional so a gate can run
  *  with only what it needs (a pre-commit gate has no targetBranch; a pre-push gate does). */
 export type GitState = {
@@ -31,9 +33,17 @@ export type CheckpointReport = {
   violationCount: number
 }
 
-/** Identity helper for authoring a typed checkpoint config (`checkpoint.config.mjs`). */
+const gateRunFn = z.custom<Gate['run']>((v) => typeof v === 'function', 'must be a function')
+
+export const checkpointConfigSchema = z.object({
+  gates: z.array(z.object({ name: z.string().min(1), run: gateRunFn })),
+})
+
+export type CheckpointConfigInput = z.input<typeof checkpointConfigSchema>
+
+/** Validates a checkpoint config. Throws (ZodError) on invalid input. */
 export function defineCheckpoint(config: { gates: Gate[] }): { gates: Gate[] } {
-  return config
+  return checkpointConfigSchema.parse(config) as { gates: Gate[] }
 }
 
 /** Run every gate against the state and aggregate. Gates are independent; one failing never

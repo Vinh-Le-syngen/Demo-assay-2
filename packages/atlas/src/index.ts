@@ -4,3 +4,4 @@
 // dependents). The graph is data the project supplies; the engine is generic and IO-free.
 // Run via the library API or the `sys-atlas` CLI (which loads a project atlas.config.mjs).
 export * from './core'
+export * from './config'

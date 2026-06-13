@@ -1,0 +1,41 @@
+name: Sys Quality Gates
+
+on:
+  pull_request:
+    branches: ["main"] # Runs whenever a PR targets the main branch
+
+jobs:
+  audit:
+    name: pnpm check
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Download the code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Install the exact required package manager
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.30.3
+
+      # 3. Setup the exact required Node version
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      # 4. Install all dependencies across the monorepo
+      - name: Install Dependencies
+        run: pnpm install
+
+      # 5. The Ultimate Gate: Run the strict checks
+      - name: Run Sys Standard Checks
+        run: pnpm check
+
+      # 6. Conformance gate — blocks on any MUST failure (R2/R7/R8).
+      #    R7 docs/ SHOULD items emit as INFO only (non-blocking).
+      - name: Conformance Gate
+        run: pnpm check:conformance --strict

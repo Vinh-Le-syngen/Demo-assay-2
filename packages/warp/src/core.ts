@@ -2,6 +2,8 @@
 // named checks (each returns a list of error strings); warp runs them all and aggregates.
 // The checks themselves are project-specific and injected; the harness is generic.
 
+import { z } from 'zod'
+
 export type Check = {
   name: string
   run: () => string[] | Promise<string[]>
@@ -18,9 +20,17 @@ export type WarpConfig = {
   checks: Check[]
 }
 
-/** Identity helper for authoring a typed warp config (`warp.config.mjs`). */
+const checkRunFn = z.custom<Check['run']>((v) => typeof v === 'function', 'must be a function')
+
+export const warpConfigSchema = z.object({
+  checks: z.array(z.object({ name: z.string().min(1), run: checkRunFn })),
+})
+
+export type WarpConfigInput = z.input<typeof warpConfigSchema>
+
+/** Validates a warp config. Throws (ZodError) on invalid input. */
 export function defineWarp(config: WarpConfig): WarpConfig {
-  return config
+  return warpConfigSchema.parse(config) as WarpConfig
 }
 
 /** Run every check and aggregate. Checks are independent; one failing never blocks others. */

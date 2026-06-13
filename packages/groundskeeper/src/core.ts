@@ -2,6 +2,8 @@
 // register detectors (pure functions returning Findings); the harness runs them,
 // summarizes, and decides whether to alert. Ported from SYS-GROUNDSKEEPER.
 
+import { z } from 'zod'
+
 export type Severity = 'info' | 'warning' | 'high'
 
 export interface Finding {
@@ -20,8 +22,17 @@ export interface GroundskeeperConfig {
   detectors: Detector[]
 }
 
+const detectorRunFn = z.custom<Detector['run']>((v) => typeof v === 'function', 'must be a function')
+
+export const groundskeeperConfigSchema = z.object({
+  detectors: z.array(z.object({ name: z.string().min(1), run: detectorRunFn })),
+})
+
+export type GroundskeeperConfigInput = z.input<typeof groundskeeperConfigSchema>
+
+/** Validates a groundskeeper config. Throws (ZodError) on invalid input. */
 export function defineGroundskeeper(config: GroundskeeperConfig): GroundskeeperConfig {
-  return config
+  return groundskeeperConfigSchema.parse(config) as GroundskeeperConfig
 }
 
 export interface HousekeepingReport {

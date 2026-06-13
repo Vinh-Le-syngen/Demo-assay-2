@@ -1,6 +1,7 @@
 // @eng/governance — composition root. Takes a venture's governance config (validated via @sys/canon
 // schemas) and exposes the decision surface. The engine reads records + policy; it owns no truth.
 
+import { z } from 'zod'
 import {
   RestrictedClaimsConfig,
   ApprovedClaimsConfig,
@@ -41,8 +42,20 @@ export type Governance = {
   sellableServices(): string[]
 }
 
+export const governanceConfigSchema = z.object({
+  restricted: z.unknown().optional(),
+  approved: z.unknown().optional(),
+  capabilities: z.unknown().optional(),
+  choices: z.unknown().optional(),
+  serviceAuthority: z.unknown().optional(),
+  scanExclude: z.instanceof(RegExp).optional(),
+})
+
+export type GovernanceConfigInput = z.input<typeof governanceConfigSchema>
+
 /** defineGovernance — validates the injected config and returns the decision surface. */
 export function defineGovernance(config: GovernanceConfig = {}): Governance {
+  governanceConfigSchema.parse(config)
   const restricted = config.restricted !== undefined ? RestrictedClaimsConfig.parse(config.restricted).restricted : []
   const approved = config.approved !== undefined ? ApprovedClaimsConfig.parse(config.approved).claims : []
   const capabilities = config.capabilities !== undefined ? CapabilityInventoryConfig.parse(config.capabilities).capabilities : []

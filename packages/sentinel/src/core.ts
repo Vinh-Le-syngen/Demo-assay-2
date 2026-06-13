@@ -2,6 +2,8 @@
 // probes, derives overall health from a configured "critical" set, and decides whether
 // the result is alert-worthy. Probes are project-specific and injected.
 
+import { z } from 'zod'
+
 export type DepStatus = {
   name: string
   status: 'up' | 'down' | 'not_configured'
@@ -24,8 +26,18 @@ export type SentinelConfig = {
   critical?: string[]
 }
 
+const probeRunFn = z.custom<Probe['run']>((v) => typeof v === 'function', 'must be a function')
+
+export const sentinelConfigSchema = z.object({
+  probes: z.array(z.object({ name: z.string().min(1), run: probeRunFn })),
+  critical: z.array(z.string()).optional(),
+})
+
+export type SentinelConfigInput = z.input<typeof sentinelConfigSchema>
+
+/** Validates a sentinel config. Throws (ZodError) on invalid input. */
 export function defineSentinel(config: SentinelConfig): SentinelConfig {
-  return config
+  return sentinelConfigSchema.parse(config) as SentinelConfig
 }
 
 /** Run all probes; `healthy` is false if any CRITICAL dependency is not 'up'. */

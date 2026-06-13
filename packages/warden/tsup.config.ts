@@ -17,4 +17,5 @@ export default defineConfig({
   // fully self-contained (no runtime @sys deps). This is what lets a non-node consumer (cadre-os)
   // run `node dist/cli.cjs` standalone.
   noExternal: [/@sys\//],
+  onSuccess: 'node scripts/emit-schema.mjs',
 })
