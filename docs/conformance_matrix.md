@@ -1,6 +1,6 @@
 # `@sys/*` / `@eng/*` Conformance Matrix
 
-> Generated 2026-06-11 — `node scripts/check-conformance.mjs` to refresh.
+> Generated 2026-06-13 — `node scripts/check-conformance.mjs` to refresh.
 
 **Legend:** ✅ PASS · ❌ FAIL (MUST unmet) · ℹ️ INFO (SHOULD unmet, non-blocking) · — N/A
 
