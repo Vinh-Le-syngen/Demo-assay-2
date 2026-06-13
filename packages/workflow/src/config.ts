@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { WorkflowDefinition } from './definition'
 
 const stageSchema = z
   .object({
@@ -16,8 +17,7 @@ export const workflowDefinitionSchema = z.object({
 })
 
 export type WorkflowDefinitionInput = z.input<typeof workflowDefinitionSchema>
-export type WorkflowDefinition = z.infer<typeof workflowDefinitionSchema>
 
 export function defineWorkflow(input: WorkflowDefinitionInput): WorkflowDefinition {
-  return workflowDefinitionSchema.parse(input)
+  return workflowDefinitionSchema.parse(input) as unknown as WorkflowDefinition
 }

@@ -17,6 +17,6 @@ export const jurisdictionPolicySpecSchema = z
 export type JurisdictionPolicySpecInput = z.input<typeof jurisdictionPolicySpecSchema>
 
 export function defineBilling(input: JurisdictionPolicySpecInput): InvoicePolicy {
-  const spec = jurisdictionPolicySpecSchema.parse(input) as JurisdictionPolicySpec
+  const spec = jurisdictionPolicySpecSchema.parse(input) as unknown as JurisdictionPolicySpec
   return createJurisdictionPolicy(spec)
 }

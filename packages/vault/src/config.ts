@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { createVault, type VaultDeps } from './core/service'
-import type { Vault } from './core/contract'
+import { createVault, type VaultDeps, type Vault } from './core/service'
 
 export const vaultConfigSchema = z.object({})
 

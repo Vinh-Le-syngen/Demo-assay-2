@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { DependencyGraph } from './core'
 
 const criticalitySchema = z.enum(['critical', 'high', 'medium', 'low'])
 
@@ -17,8 +18,7 @@ export const dependencyGraphSchema = z.object({
 })
 
 export type DependencyGraphInput = z.input<typeof dependencyGraphSchema>
-export type DependencyGraph = z.infer<typeof dependencyGraphSchema>
 
 export function defineAtlas(input: DependencyGraphInput): DependencyGraph {
-  return dependencyGraphSchema.parse(input)
+  return dependencyGraphSchema.parse(input) as DependencyGraph
 }

@@ -11,5 +11,5 @@ export type ReleaseConfig = z.infer<typeof releaseConfigSchema> & ReleaseSeams
 
 export function defineRelease(deps: ReleaseSeams): ReleaseConfig {
   releaseConfigSchema.parse({})
-  return deps
+  return deps as ReleaseConfig
 }

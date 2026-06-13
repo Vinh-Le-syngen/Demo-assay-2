@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import type { PromotionPolicy } from './core'
 
 const riskSchema = z.enum(['normal', 'risky', 'critical'])
 
@@ -17,8 +18,7 @@ export const promotionPolicySchema = z.object({
 })
 
 export type PromotionPolicyInput = z.input<typeof promotionPolicySchema>
-export type PromotionPolicy = z.infer<typeof promotionPolicySchema>
 
 export function defineGatekeeper(input: PromotionPolicyInput): PromotionPolicy {
-  return promotionPolicySchema.parse(input)
+  return promotionPolicySchema.parse(input) as PromotionPolicy
 }
