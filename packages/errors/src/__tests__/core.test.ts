@@ -124,6 +124,31 @@ describe('alertPlan', () => {
   })
 })
 
+describe('validateRegistry — gap coverage', () => {
+  it('passes an empty codes array (shape-only, nothing to check)', () => {
+    const empty: ErrorRegistry = { schemaVersion: 1, codes: [] }
+    expect(validateRegistry(empty)).toEqual([])
+  })
+  it('does not detect circular replacedBy chains (documented gap)', () => {
+    // A → B → A: both codes exist so validateRegistry sees no dangling successor.
+    // A cycle-detection pass would need to follow the chain — currently not implemented.
+    const cyclic: ErrorRegistry = {
+      schemaVersion: 1,
+      codes: [
+        { code: 'DOM.A.ONE', domain: 'DOM', retryable: false, deprecated: true, replacedBy: 'DOM.B.TWO' },
+        { code: 'DOM.B.TWO', domain: 'DOM', retryable: false, deprecated: true, replacedBy: 'DOM.A.ONE' },
+      ],
+    }
+    // No issues reported — cycle is a known gap, not a current guarantee
+    expect(validateRegistry(cyclic)).toEqual([])
+  })
+  it('defineRegistry throws ZodError on structurally invalid input', () => {
+    expect(() =>
+      defineRegistry({ schemaVersion: 1, codes: 'not-an-array' } as unknown as ErrorRegistry),
+    ).toThrow()
+  })
+})
+
 describe('toTelemetryEvent', () => {
   it('builds an error-domain event carrying the full contract', () => {
     const e = toTelemetryEvent(REG, 'AUTH.TOKEN.INVALID_SIGNATURE', {

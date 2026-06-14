@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "product": "qarar",
+  "adopts": {
+    "release_set": "baseline@2026.06.0"
+  },
+  "packages": {
+    "@eng/governance": "1.0.0",
+    "@sys/assay": "0.3.0",
+    "@sys/auth": "0.0.1",
+    "@sys/canon": "1.0.0",
+    "@sys/errors": "0.0.1",
+    "@sys/release": "0.0.4",
+    "@sys/telemetry": "0.0.1"
+  }
+}

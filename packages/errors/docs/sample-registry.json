@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "domains": ["RT", "INT", "DOM", "CTL", "AUTH"],
+  "codes": [
+    {
+      "code": "RT.DB.TIMEOUT",
+      "domain": "RT",
+      "retryable": true,
+      "remediation": "Retry with exponential backoff (max 3 attempts).",
+      "severity": "error",
+      "alert": "pager"
+    },
+    {
+      "code": "RT.DB.CORRUPTION",
+      "domain": "RT",
+      "retryable": false,
+      "message": "Database page checksum mismatch — data integrity at risk.",
+      "remediation": "Page on-call immediately. Do NOT retry.",
+      "severity": "fatal",
+      "alert": "pager",
+      "owner": "COMP-INFRA"
+    },
+    {
+      "code": "INT.STRIPE.DECLINED",
+      "domain": "INT",
+      "retryable": false,
+      "message": "Card declined by Stripe.",
+      "remediation": "Surface decline reason to user; do not retry.",
+      "severity": "warn",
+      "alert": "none"
+    },
+    {
+      "code": "INT.STRIPE.TIMEOUT",
+      "domain": "INT",
+      "retryable": true,
+      "message": "Stripe API did not respond in time.",
+      "remediation": "Retry once after 2 s; if still failing, alert billing team.",
+      "severity": "error",
+      "alert": "slack-billing"
+    },
+    {
+      "code": "DOM.INVARIANT.VIOLATED",
+      "domain": "DOM",
+      "retryable": false,
+      "message": "A domain invariant was violated — the system reached an impossible state.",
+      "remediation": "This is a bug. Page on-call and capture full context.",
+      "severity": "fatal",
+      "alert": "pager",
+      "owner": "COMP-DOMAIN"
+    },
+    {
+      "code": "CTL.RATE_LIMIT.EXCEEDED",
+      "domain": "CTL",
+      "retryable": true,
+      "message": "Rate limit exceeded.",
+      "remediation": "Honour the Retry-After header.",
+      "severity": "warn",
+      "alert": "none"
+    },
+    {
+      "code": "AUTH.TOKEN.INVALID_SIGNATURE",
+      "domain": "AUTH",
+      "retryable": false,
+      "message": "JWT signature verification failed.",
+      "remediation": "Re-authenticate. Do not retry with the same token.",
+      "severity": "warn",
+      "alert": "slack-security",
+      "owner": "COMP-AUTH"
+    },
+    {
+      "code": "AUTH.TOKEN.EXPIRED",
+      "domain": "AUTH",
+      "retryable": false,
+      "message": "Token has passed its expiry.",
+      "remediation": "Refresh the token and retry the original request.",
+      "severity": "info",
+      "alert": "none",
+      "deprecated": true,
+      "replacedBy": "AUTH.SESSION.EXPIRED"
+    },
+    {
+      "code": "AUTH.SESSION.EXPIRED",
+      "domain": "AUTH",
+      "retryable": false,
+      "message": "Session has expired.",
+      "remediation": "Redirect to login.",
+      "severity": "info",
+      "alert": "none"
+    }
+  ]
+}
